@@ -3,6 +3,9 @@ using PeerCover.Services;
 using Xamarin.Essentials;
 using Rg.Plugins.Popup.Services;
 using PeerCover.Views;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
 
 namespace PeerCover
 {
@@ -21,7 +24,10 @@ namespace PeerCover
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            AppCenter.Start("android=3c27309c-31da-42d5-9663-a893747476d0;" +
+                  "uwp={Your UWP App secret here};" +
+                  "ios={Your iOS App secret here}",
+                  typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()
