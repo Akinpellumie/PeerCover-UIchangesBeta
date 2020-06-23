@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:PeerCover.Utils"
+             x:Class="PeerCover.Views.AstraWebView"
+           Shell.BackgroundColor="#27d2dc"
+             Shell.TabBarBackgroundColor="#27d2dc"
+             Shell.NavBarIsVisible="True"
+             BackgroundColor="White"
+             NavigationPage.HasBackButton="True"
+             NavigationPage.HasNavigationBar="True"
+             Title="Pay With Astra">
+
+    <views:KeyboardView Padding="0,0,0,0"
+                         VerticalOptions="FillAndExpand">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ProgressBar Grid.Row="0" Progress="0.2" IsVisible="False" HorizontalOptions="FillAndExpand" x:Name="Indic"/>
+            <WebView Grid.Row="1" HorizontalOptions="Fill"  VerticalOptions="Fill" x:Name="Payview" Navigating="Payview_Navigating" Navigated="Payview_Navigated"/>
+
+        </Grid>
+    </views:KeyboardView>
+</ContentPage>

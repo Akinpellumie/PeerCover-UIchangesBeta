@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:PickerControl="clr-namespace:PeerCover.CustomControls"
+                 xmlns:Controls="clr-namespace:PeerCover"
+                 x:Class="PeerCover.Views.PopUpPay">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation DurationIn="300"
+                                   DurationOut="300"
+                                   EasingIn="SpringIn"
+                                   EasingOut="SpringOut"
+                                   HasBackgroundAnimation="True"
+                                   PositionIn="Center"
+                                   PositionOut="Top"
+                                   ScaleIn="1.2"
+                                   ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+
+    <!--  You can use any elements here which are extended from Xamarin.Forms.View  -->
+    <StackLayout Margin="10"
+                 Orientation="Vertical"
+                 Padding="24"
+                 BackgroundColor="White"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center">
+
+        <StackLayout Margin="5">
+            <Frame Style="{StaticResource FrameStyle}" HasShadow="False" CornerRadius="50" HeightRequest="45">
+                <PickerControl:CustomPicker HeightRequest="45" x:Name="PickMethod" 
+                                   Title="--Select Payment Method--"  ItemDisplayBinding="{Binding Value}"
+                                   ItemsSource="{Binding PaymentList}"  FontFamily="OpenSans" FontSize="Subtitle"/>
+            </Frame>
+        </StackLayout>
+
+        <ActivityIndicator x:Name="indicator" IsVisible="False" Margin="0,5,0,0"  Grid.RowSpan="2" 
+                           VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" IsRunning="False" />
+
+        <StackLayout Margin="10">
+            <Label Margin="5" Text="Transaction Reference Number" TextColor="{StaticResource TxtColor}"/>
+            <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,5" CornerRadius="50">
+                <Controls:CustomEntry x:Name="transRef" Margin="5,0,0,3" VerticalOptions="End"
+                         Keyboard="Default" Placeholder="Input Ref Number" FontFamily="OpenSans" FontSize="Subtitle"
+                         Style="{StaticResource EntryStyle}" PlaceholderColor="{StaticResource TypeColor}"/>
+            </Frame>
+        </StackLayout>
+
+        <Button BackgroundColor="Accent" CornerRadius="50"
+                FontSize="Subtitle" Clicked="VerifyPayment_Clicked"
+                Text="SUBMIT" Margin="10" HorizontalOptions="Fill"
+                TextColor="White"/>
+
+
+    </StackLayout>
+</pages:PopupPage>
