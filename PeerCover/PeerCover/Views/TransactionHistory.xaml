@@ -18,11 +18,12 @@
 
                 <StackLayout  x:Name="TranStack" IsVisible="True" Margin="5,15,5,5">
                     <ListView x:Name="TransList" HasUnevenRows="True" IsPullToRefreshEnabled="True"
-                          SeparatorVisibility="Default" SeparatorColor="#27d2dc">
+                          SeparatorVisibility="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <StackLayout Margin="5">
+                                    <Frame BackgroundColor="#f1f2f7" HasShadow="False" Margin="5" CornerRadius="15">
+                                    <StackLayout Margin="2">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
@@ -34,22 +35,23 @@
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
                                                     <StackLayout Orientation="Vertical" Grid.Column="0">
-                                                        <Label Text="{Binding transaction_type}" TextColor="{StaticResource TxtColor}" FontSize="15" FontAttributes="Bold"/>
+                                                        <Label Text="{Binding transType}" TextColor="{StaticResource TxtColor}" FontSize="Subtitle" FontAttributes="Bold" FontFamily="OpenSans"/>
                                                         <StackLayout Grid.Row="1" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
-                                                            <Label FontSize="10" TextColor="{StaticResource TxtColor}" Text="Policy No:"/>
-                                                            <Label FontSize="10" TextColor="{StaticResource TxtColor}" Text="{Binding policy_number}"/>
+                                                            <Label FontSize="Body" TextColor="{StaticResource TxtColor}" Text="Policy No:"/>
+                                                            <Label FontSize="Body" TextColor="{StaticResource TxtColor}" Text="{Binding policy_number}"/>
                                                         </StackLayout>
-                                                        <Label Text="{Binding PmtAmountFormat}" FontSize="12" TextColor="{StaticResource TxtColor}"/>
+                                                        <Label Text="{Binding PmtAmountFormat}" FontSize="Body" TextColor="{StaticResource TxtColor}"/>
                                                     </StackLayout>
 
                                                     <StackLayout Grid.Column="1" VerticalOptions="Center" Orientation="Vertical">
                                                         <Label Text="{Binding DapDate}" TextColor="{StaticResource TxtColor}" FontSize="15" FontAttributes="Bold"/>
-                                                        <Label Text="{Binding payment_status}" TextColor="{Binding Path=PayStatusColor}" FontSize="13" FontAttributes="Bold"/>
+                                                        <Label Text="{Binding payment_status}" TextColor="{Binding Path=PayStatusColor}" FontSize="Body" FontAttributes="Bold"/>
                                                     </StackLayout>
                                                 </Grid>
                                             </StackLayout>
                                         </Grid>
                                     </StackLayout>
+                                    </Frame>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>

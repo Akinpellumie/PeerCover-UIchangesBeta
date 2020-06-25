@@ -65,8 +65,8 @@ namespace PeerCover.Views
 
             if (string.IsNullOrEmpty(ProfileImage))
             {
-                UserImagePro.Source = "undrawMale.svg";
-                HeaderImg.Source = "undrawMale.svg";
+                UserImagePro.Source = "undrawPro.svg";
+                HeaderImg.Source = "undrawPro.svg";
             }
             else
             {

@@ -75,7 +75,7 @@ namespace PeerCover.Views
             bnkNm = MemberDetails.member[0].bankname;
             if (string.IsNullOrEmpty(ProfileImage))
             {
-                EditUserImage.Source = "placeholder.png";
+                EditUserImage.Source = "undrawPro.svg";
             }
             else
             {

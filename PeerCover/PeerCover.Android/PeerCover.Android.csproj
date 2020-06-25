@@ -404,5 +404,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\undrawMale.svg" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\undrawPro.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

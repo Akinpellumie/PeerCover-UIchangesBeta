@@ -273,7 +273,7 @@ namespace PeerCover.Views
             
             if (string.IsNullOrEmpty(ProfileImage))
             {
-                FlyOutImage.Source = "placeholder.png";
+                FlyOutImage.Source = "undrawPro.svg";
             }
             else
             {
