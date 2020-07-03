@@ -27,7 +27,8 @@
                     </Label.FormattedText>
                 </Label>
 
-                <Button VerticalOptions="EndAndExpand" Margin="15" Padding="10" Text="GET STARTED" BackgroundColor="{StaticResource BtnColor}" FontSize="Subtitle"
+                <Button VerticalOptions="EndAndExpand" Margin="15" Padding="10" Text="GET STARTED" 
+                        BackgroundColor="{StaticResource BtnColor}" FontSize="Subtitle"
                      HeightRequest="45" HorizontalOptions="Fill" CornerRadius="50" 
                     Clicked="getStartedClicked" TextColor="White"/>
             </StackLayout>

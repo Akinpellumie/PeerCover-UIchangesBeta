@@ -75,7 +75,7 @@
                                        HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
 
                                 <Label x:Name="UserName" Text="{Binding username}"  FontAttributes="Bold" TextColor="Accent" 
-                                       FontSize="Body" FontFamily="OpenSans" HorizontalOptions="Start"/>
+                                       FontSize="Body" HorizontalOptions="Start"/>
                             </StackLayout>
                         </Grid>
                     </Grid>

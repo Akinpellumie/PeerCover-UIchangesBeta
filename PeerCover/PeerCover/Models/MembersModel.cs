@@ -119,7 +119,7 @@ namespace PeerCover.Models
             {
                 if(string.IsNullOrEmpty(profile_img_url))
                 {
-                    var source1 = ImageSource.FromFile("placeholder.png");
+                    var source1 = ImageSource.FromFile("undrawPro.svg");
                     return source1;
                 }
                 else

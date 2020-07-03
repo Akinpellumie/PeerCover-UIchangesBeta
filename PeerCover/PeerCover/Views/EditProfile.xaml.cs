@@ -48,58 +48,61 @@ namespace PeerCover.Views
         }
         public async void GetUserById()
         {
-            HttpClient client = new HttpClient();
-            var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+            try
+            {
+                HttpClient client = new HttpClient();
+                var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
 
-            var result = await client.GetStringAsync(UserdetailEndpoint);
-            var MemberDetails = JsonConvert.DeserializeObject<MemberDetailsModel>(result);
-            //JObject jsonDes = JObject.Parse(result);
+                var result = await client.GetStringAsync(UserdetailEndpoint);
+                var MemberDetails = JsonConvert.DeserializeObject<MemberDetailsModel>(result);
+                FNInput.BindingContext = MemberDetails.member[0];
+                LNInput.BindingContext = MemberDetails.member[0];
+                EMInput.BindingContext = MemberDetails.member[0];
+                PNInput.BindingContext = MemberDetails.member[0];
+                ACNInput.BindingContext = MemberDetails.member[0];
+                ANMInput.BindingContext = MemberDetails.member[0];
+                ADRInput.BindingContext = MemberDetails.member[0];
+                BankPicker.BindingContext = MemberDetails.member[0];
+                ProfileImage = MemberDetails.member[0].profile_img_url;
+                BankPicker.Title = MemberDetails.member[0].bankname;
+                GenderPicker.Title = MemberDetails.member[0].gender;
+                myGend = MemberDetails.member[0].gender;
+                bnkCde = MemberDetails.member[0].bank_code;
+                bnkNm = MemberDetails.member[0].bankname;
+                if (string.IsNullOrEmpty(ProfileImage))
+                {
+                    EditUserImage.Source = "undrawPro.svg";
+                }
+                else
+                {
+                    EditUserImage.Source = Helper.ImageUrl + ProfileImage;
+                }
 
-            //PageName.BindingContext = jsonDes["member"]["capName"].ToString();
-            //UserImagePro.BindingContext = MemberDetails.member[0];
-            FNInput.BindingContext = MemberDetails.member[0];
-            LNInput.BindingContext = MemberDetails.member[0];
-            EMInput.BindingContext = MemberDetails.member[0];
-            PNInput.BindingContext = MemberDetails.member[0];
-            ACNInput.BindingContext = MemberDetails.member[0];
-            ANMInput.BindingContext = MemberDetails.member[0];
-            ADRInput.BindingContext = MemberDetails.member[0];
-            BankPicker.BindingContext = MemberDetails.member[0];
-            ProfileImage = MemberDetails.member[0].profile_img_url;
-            BankPicker.Title = MemberDetails.member[0].bankname;
-            GenderPicker.Title = MemberDetails.member[0].gender;
-            myGend = MemberDetails.member[0].gender;
-            bnkCde = MemberDetails.member[0].bank_code;
-            bnkNm = MemberDetails.member[0].bankname;
-            if (string.IsNullOrEmpty(ProfileImage))
-            {
-                EditUserImage.Source = "undrawPro.svg";
-            }
-            else
-            {
-                EditUserImage.Source = Helper.ImageUrl + ProfileImage;
-            }
+                if (string.IsNullOrEmpty(bnkNm))
+                {
+                    BankPicker.Title = "--Select Bank--";
+                }
+                else
+                {
+                    BankPicker.Title = bnkNm;
+                }
 
-            if (string.IsNullOrEmpty(bnkNm))
-            {
-                BankPicker.Title = "--Select Bank--";
-            }
-            else
-            {
-                BankPicker.Title = bnkNm;
-            }
+                if (string.IsNullOrEmpty(myGend))
+                {
+                    GenderPicker.Title = "--Select Gender--";
+                }
+                else
+                {
+                    GenderPicker.Title = myGend;
+                }
 
-            if (string.IsNullOrEmpty(myGend))
+                }
+            catch (Exception)
             {
-                GenderPicker.Title = "--Select Gender--";
+                return;
             }
-            else
-            {
-                GenderPicker.Title = myGend;
-            }
-
         }
 
         //protected override bool OnBackButtonPressed()
@@ -315,15 +318,23 @@ UpdateMemberClicked()
 
         public async void GetBanks()
         {
-            HttpClient client = new HttpClient();
-            var UserCountEndpoint = Helper.BankNamesUrl;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+            try
+            {
+                HttpClient client = new HttpClient();
+                var UserCountEndpoint = Helper.BankNamesUrl;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
 
-            var result = await client.GetStringAsync(UserCountEndpoint);
-            var UsersCnt = JsonConvert.DeserializeObject<List<BanksModel>>(result);
+                var result = await client.GetStringAsync(UserCountEndpoint);
+                var UsersCnt = JsonConvert.DeserializeObject<List<BanksModel>>(result);
 
-            BankPicker.ItemsSource = UsersCnt;
+                BankPicker.ItemsSource = UsersCnt;
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Oops!","Unable to load list of available banks at the moment. Please try again later.","Ok");
+                return;
+            }
         }
 
         public void Input_TextChanged(object sender, TextChangedEventArgs e)

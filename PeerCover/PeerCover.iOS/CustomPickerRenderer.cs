@@ -1,5 +1,6 @@
 ﻿using PeerCover.CustomControls;
 using PeerCover.iOS;
+using System.Runtime.Remoting.Contexts;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -9,18 +10,17 @@ namespace PeerCover.iOS
 {
     public class CustomPickerRenderer : PickerRenderer
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
-        {
-            base.OnElementChanged(e);
-
-            var element = (CustomPicker)this.Element;
-
-            if (this.Control != null && this.Element != null && !string.IsNullOrEmpty(element.Image))
-            {
-                var downarrow = UIImage.FromBundle(element.Image);
-                Control.RightViewMode = UITextFieldViewMode.Always;
-                Control.RightView = new UIImageView(downarrow);
-            }
-        }
+        //public CustomPickerRenderer(Context context) : base(context)
+        //{
+        //    AutoPackage = false;
+        //}
+        //protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
+        //{
+        //    base.OnElementChanged(e);
+        //    if (Control != null)
+        //    {
+        //        Control.Background = new ColorDrawable(Android.Graphics.Color.Transparent);
+        //    }
+        //}
     }
 }

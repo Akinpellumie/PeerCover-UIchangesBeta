@@ -11423,22 +11423,25 @@ namespace PeerCover.Droid
 			public const int undrawPass = 2131165383;
 			
 			// aapt resource value: 0x7F0700C8
-			public const int undrawSuccess = 2131165384;
+			public const int undrawPro = 2131165384;
 			
 			// aapt resource value: 0x7F0700C9
-			public const int undrawThrough = 2131165385;
+			public const int undrawSuccess = 2131165385;
 			
 			// aapt resource value: 0x7F0700CA
-			public const int undrawTru = 2131165386;
+			public const int undrawThrough = 2131165386;
+			
+			// aapt resource value: 0x7F0700CB
+			public const int undrawTru = 2131165387;
 			
 			// aapt resource value: 0x7F0700C5
 			public const int undraw_welcome_3gvl = 2131165381;
 			
-			// aapt resource value: 0x7F0700CB
-			public const int upload = 2131165387;
-			
 			// aapt resource value: 0x7F0700CC
-			public const int xamarin_logo = 2131165388;
+			public const int upload = 2131165388;
+			
+			// aapt resource value: 0x7F0700CD
+			public const int xamarin_logo = 2131165389;
 			
 			static Drawable()
 			{

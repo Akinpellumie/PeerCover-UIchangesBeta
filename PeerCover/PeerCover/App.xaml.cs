@@ -6,6 +6,8 @@ using PeerCover.Views;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
+using System.Net.Http;
+using System;
 
 namespace PeerCover
 {
@@ -39,6 +41,8 @@ namespace PeerCover
         {
             // Handle when your app resumes
             CheckInternet();
+            CheckToken();
+
 
         }
 
@@ -47,6 +51,27 @@ namespace PeerCover
             if (Connectivity.NetworkAccess == NetworkAccess.None)
             {
                 await PopupNavigation.Instance.PushAsync(new PopUpNoInternet());
+            }
+        }
+
+        async void CheckToken()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+
+                var result = await client.GetAsync(UserdetailEndpoint);
+                if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    Application.Current.MainPage = new NavigationPage(new LoginPage());
+                }
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
 

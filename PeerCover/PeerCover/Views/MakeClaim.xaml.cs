@@ -49,16 +49,22 @@ namespace PeerCover.Views
         }
 
         public async void LoadUserPlan(string subscription_id)
-
         {
-            var url = Helper.NewPlanUrl + subscription_id;
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(url);
-            var UsersList = JsonConvert.DeserializeObject<ActiveSubModel>(result);
-            PlanDetails.BindingContext = UsersList.subscription[0];
-            policyNo = UsersList.subscription[0].policy_number;
+            try
+            {
+                var url = Helper.NewPlanUrl + subscription_id;
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(url);
+                var UsersList = JsonConvert.DeserializeObject<ActiveSubModel>(result);
+                PlanDetails.BindingContext = UsersList.subscription[0];
+                policyNo = UsersList.subscription[0].policy_number;
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         async void CheckInternet()
@@ -589,6 +595,8 @@ namespace PeerCover.Views
 
         public async void GetBanks()
         {
+            try
+            {
                 HttpClient client = new HttpClient();
                 var UserCountEndpoint = Helper.BankNamesUrl;
                 client.DefaultRequestHeaders.Clear();
@@ -598,7 +606,12 @@ namespace PeerCover.Views
                 var UsersCnt = JsonConvert.DeserializeObject<List<BanksModel>>(result);
 
                 MaBankPicker.ItemsSource = UsersCnt;
-
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Oops!", "Unable to load list of available banks at the moment. Please try again later.", "Ok");
+                return;
+            }
         }
 
         public async void GetUserById()

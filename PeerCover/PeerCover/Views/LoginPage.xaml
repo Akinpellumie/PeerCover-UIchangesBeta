@@ -41,7 +41,7 @@
                         <Grid Grid.Row="1" HeightRequest="80" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                             <BoxView BackgroundColor="{StaticResource OriginalColor}" Opacity="0.7" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
                             <StackLayout Margin="40,0" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
-                                <Label Text="LOGIN" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" FontSize="17"/>
+                                <Label Text="WELCOME BACK" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" FontSize="17"/>
                             </StackLayout>
                         </Grid>
                     </Grid>
@@ -64,8 +64,8 @@
                                 <Label Text="Username" Margin="7,0,0,0" TextColor="{StaticResource TxtColor}"/>
                                 <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,0" HeightRequest="45" CornerRadius="50">
                                     <Controls:CustomEntry  x:Name="UsernameInput"  Text="{Binding Username, Mode=TwoWay}" 
-                                                  IsTextPredictionEnabled="True" TabIndex="0" Keyboard="Default" 
-                                                   Margin="5,0,0,3" VerticalOptions="End"/>
+                                                  IsTextPredictionEnabled="True" TabIndex="0" Keyboard="Default"  
+                                                   Margin="5,0,0,3" VerticalOptions="End" FontFamily="{StaticResource font_book}"/>
                                 </Frame>
                             </StackLayout>
 
@@ -73,7 +73,7 @@
                                 <Label Text="Password" Margin="7,0,0,0" TextColor="{StaticResource TxtColor}"/>
                                 <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,0" HeightRequest="45" CornerRadius="50">
                                     <Controls:CustomEntry x:Name="PasswordInput" Text="{Binding password, Mode=TwoWay}" 
-                                                  Keyboard="Default" IsPassword="True"  
+                                                  Keyboard="Default" IsPassword="True"  FontFamily="{StaticResource font_book}" 
                                                    Margin="5,0,0,3" VerticalOptions="End" CharacterSpacing="2">
                                         <Entry.Effects>
                                             <Controls:ShowHidePassEffect />
