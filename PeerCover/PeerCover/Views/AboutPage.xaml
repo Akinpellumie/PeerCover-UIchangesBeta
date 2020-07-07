@@ -11,27 +11,59 @@
              NavigationPage.HasBackButton="True"
              Title="About Plan">
     <ContentPage.Content>
-        <StackLayout>
-            <!--<Frame BackgroundColor="{StaticResource Primary}" IsClippedToBounds="True" HasShadow="True">
-                <Label Text="About Plan" TextColor="White" FontSize="20" HorizontalOptions="StartAndExpand" Margin="5,0,0,0"/>
-            </Frame>-->
-
-            <StackLayout Margin="15">
-                <Label LineBreakMode="WordWrap">
+        <StackLayout Padding="10">
+            <StackLayout Orientation="Vertical">
+                <!--<Label LineBreakMode="WordWrap">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="The auto insurance generally includes: Loss or damage by accident, fire, lightning, self ignition, 
-                              external explosion, burglary, housebreaking or theft, malicious act. Liability for third party injury/death, 
-                              third party property and liability  to paid driver." LineHeight="1.8"/>
+                            <Span Text="Our Risk Management Plan protects members against accidental vehicle damages, including theft. 
+                                  In addition to the above, the PeerCover Risk Management Plan also allows the subscriber to claim for 
+                                  damages caused by fire, lightning, self-ignition, burglary, external explosion, or theft." LineHeight="1.8"/>
                         </FormattedString>
                     </Label.FormattedText>
+                </Label>-->
+
+                <Label TextType="Html" LineBreakMode="WordWrap">
+                    <![CDATA[
+                    Our <strong style="color:Accent">Risk Management Plan</strong> protects members against accidental vehicle damages, including theft.
+                    ]]>
                 </Label>
 
-                <Button VerticalOptions="EndAndExpand" Margin="15" Padding="10" Text="GET STARTED" 
+                <Label TextType="Html" LineBreakMode="WordWrap">
+                    <![CDATA[
+                    In addition to the above, the PeerCover <strong style="color:Accent">Risk Management Plan</strong> also allows the subscriber to claim for damages caused by fire, lightning, self-ignition, burglary, external explosion, or theft.
+                    ]]>
+                </Label>
+            </StackLayout>
+            
+            <StackLayout Orientation="Vertical">
+
+                <Label Text="FEATURES AND EXTENT OF PLAN" TextDecorations="Underline" Padding="0,10" TextColor="{StaticResource TxtColor}" FontSize="Subtitle"
+                       FontAttributes="Bold" HorizontalOptions="Center"/>
+
+                <Label HorizontalOptions="Start" LineBreakMode="WordWrap"
+                    Text="1. Damage caused by a fire on the subscriber's vehicle." FontSize="Body"
+                                      TextColor="{StaticResource TxtColor}"/>
+
+                <Label HorizontalOptions="Start" LineBreakMode="WordWrap" 
+                       Text="2. Theft or accidental damage to the subscriber's vehicle." 
+                       FontSize="Body" TextColor="{StaticResource TxtColor}"/>
+                
+                <Label HorizontalOptions="Start" LineBreakMode="WordWrap" 
+                       Text="3. Replacement Cost or repair costs for accidental damage, theft, or fire damage to the subscriber's vehicle." 
+                       FontSize="Body" TextColor="{StaticResource TxtColor}"/>
+                
+                <Label HorizontalOptions="Start" LineBreakMode="WordWrap"
+                   Text="4. Contribution paid is calculated based on the value of the vehicle (3% of the estimated car value)." 
+                       FontSize="Body" TextColor="{StaticResource TxtColor}"/>
+                       
+
+            </StackLayout>
+
+            <Button VerticalOptions="EndAndExpand" Margin="15" Padding="10" Text="GET STARTED" 
                         BackgroundColor="{StaticResource BtnColor}" FontSize="Subtitle"
                      HeightRequest="45" HorizontalOptions="Fill" CornerRadius="50" 
                     Clicked="getStartedClicked" TextColor="White"/>
-            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

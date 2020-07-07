@@ -39,17 +39,27 @@
                             FontSize="20" FontAttributes="Bold" />
                             </StackLayout>
 
-                            <StackLayout Grid.Row="2" >
-                                <Label Margin="7,5,5,5" Text="Drop a message" TextColor="{StaticResource TxtColor}"/>
-                                <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,5" CornerRadius="25">
-                                    <Controls:CustomEditor x:Name="RecInput" Keyboard="Default"  Margin="5,0,0,3" FontSize="Subtitle"  FontFamily="OpenSans"
+                            <StackLayout Grid.Row="2">
+                                <StackLayout Margin="0,0,0,10">
+                                    <Label Margin="7,5,5,5" Text="Select Causes" TextColor="{StaticResource TxtColor}"/>
+                                    <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,5" HeightRequest="45" CornerRadius="50">
+                                        <PickerControl:CustomPicker  x:Name="PickCauses" Title="--Select Causes--"
+                                    ItemsSource="{Binding CausesList}" Margin="5,0,0,3" VerticalOptions="End"
+                                    ItemDisplayBinding="{Binding Value}" FontSize="Subtitle"  FontFamily="OpenSans"/>
+                                    </Frame>
+                                </StackLayout>
+                                
+                                <StackLayout>
+                                    <Label Margin="7,5,5,5" Text="Drop a message" TextColor="{StaticResource TxtColor}"/>
+                                    <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,5" CornerRadius="25">
+                                        <Controls:CustomEditor x:Name="RecInput" Keyboard="Default"  Margin="5,0,0,3" FontSize="Subtitle"  FontFamily="OpenSans"
                                        AutoSize="TextChanges" MaxLength="200"  Placeholder="Write a message"
                                       PlaceholderColor="{StaticResource TypeColor}" VerticalOptions="Center"/>
-                                </Frame>
+                                    </Frame>
+                                </StackLayout>
+                                
                             </StackLayout>
-
-
-
+                            
                             <StackLayout Grid.Row="3" >
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -156,16 +166,7 @@
 
                 <ScrollView>
                     <StackLayout>
-
-                        <StackLayout Margin="0,0,0,10">
-                            <Label Margin="7,5,5,5" Text="Select Causes" TextColor="{StaticResource TxtColor}"/>
-                            <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,5" HeightRequest="45" CornerRadius="50">
-                                <PickerControl:CustomPicker  x:Name="PickCauses" Title="--Select Causes--"
-                                    ItemsSource="{Binding CausesList}" Margin="5,0,0,3" VerticalOptions="End"
-                                    ItemDisplayBinding="{Binding Value}" FontSize="Subtitle"  FontFamily="OpenSans"/>
-                            </Frame>
-                        </StackLayout>
-
+                        
                         <StackLayout Margin="0,0,0,10">
                             <Label Margin="7,5,5,5" Text="Repair Cost" TextColor="{StaticResource TxtColor}"/>
                             <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,5" HeightRequest="45" CornerRadius="50">

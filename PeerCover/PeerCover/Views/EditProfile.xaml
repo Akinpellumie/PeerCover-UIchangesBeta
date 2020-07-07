@@ -80,8 +80,8 @@
                     <Label Margin="7,5,5,5" Text="Select Gender" TextColor="{StaticResource TxtColor}"/>
                     <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,5" HeightRequest="45" CornerRadius="50">
                         <PickerControl:CustomPicker x:Name="GenderPicker" Title="--Select Gender--"
-                                    SelectedIndexChanged="GndPck_SldIdxChanged" 
-                                    ItemsSource="{Binding GenderList}" FontSize="12" Margin="5,0,0,3" VerticalOptions="End"
+                                    SelectedIndexChanged="GndPck_SldIdxChanged"
+                                    ItemsSource="{Binding GenderList}" Margin="5,0,0,3" VerticalOptions="End"
                                     ItemDisplayBinding="{Binding Value}"/>
                     </Frame>
                 </StackLayout>
@@ -109,7 +109,7 @@
                     <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,5" HeightRequest="45" CornerRadius="50">
                         <PickerControl:CustomPicker HeightRequest="50" x:Name="BankPicker" 
                            SelectedIndexChanged="BnkPck_SldIdxChanged" Margin="5,0,0,3" VerticalOptions="End"
-                           ItemsSource="{Binding BankList}" FontSize="12" 
+                           ItemsSource="{Binding BankList}"
                            ItemDisplayBinding="{Binding name}" Title="--Select Bank--"/>
                     </Frame>
                 </StackLayout>

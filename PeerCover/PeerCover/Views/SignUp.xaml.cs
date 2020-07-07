@@ -87,12 +87,12 @@ namespace PeerCover.Views
                         if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                         {
                             await PopupNavigation.Instance.PopAsync(true);
-                            await DisplayAlert("InHub", response.ReasonPhrase, "Ok");
+                            await DisplayAlert("Oops!", "Server Unavailable at the moment. Please try again later!", "Ok");
                         }
                         else
                         {
                             await PopupNavigation.Instance.PopAsync(true);
-                            await DisplayAlert("InHub", "Please try again later", "Ok");
+                            await DisplayAlert("Oops!", "Connection Timeout. Please try again later", "Ok");
 
                         }
                     }
@@ -127,6 +127,17 @@ namespace PeerCover.Views
                     LblUsn.Text = "Username already exist. Try another one*";
                     USNInput.TextColor = Color.Red;
                     //USNInput = Color.Red;
+                }
+
+                if (string.IsNullOrEmpty(FTInput.Text) || string.IsNullOrEmpty(LTInput.Text) || string.IsNullOrEmpty(USNInput.Text) || string.IsNullOrEmpty(PNInput.Text))
+                {
+                    StackBtn1.IsVisible = true;
+                    StackBtn2.IsVisible = false;
+                }
+                else
+                {
+                    StackBtn2.IsVisible = true;
+                    StackBtn1.IsVisible = false;
                 }
             }
             catch (Exception)
@@ -165,7 +176,91 @@ namespace PeerCover.Views
             base.OnAppearing();
             InitStates();
         }
-            void InitStates()
+
+        public void FirstName_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(FTInput.Text) || string.IsNullOrEmpty(LTInput.Text) || string.IsNullOrEmpty(USNInput.Text) || string.IsNullOrEmpty(PNInput.Text))
+            {
+                StackBtn1.IsVisible = true;
+                StackBtn2.IsVisible = false;
+            }
+            else
+            {
+                StackBtn2.IsVisible = true;
+                StackBtn1.IsVisible = false;
+            }
+        }
+
+        public void LastName_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(FTInput.Text) || string.IsNullOrEmpty(LTInput.Text) || string.IsNullOrEmpty(USNInput.Text) || string.IsNullOrEmpty(PNInput.Text))
+            {
+                StackBtn1.IsVisible = true;
+                StackBtn2.IsVisible = false;
+            }
+            else
+            {
+                StackBtn2.IsVisible = true;
+                StackBtn1.IsVisible = false;
+            }
+        }
+
+        public void PhoneNumber_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(FTInput.Text) || string.IsNullOrEmpty(LTInput.Text) || string.IsNullOrEmpty(USNInput.Text) || string.IsNullOrEmpty(PNInput.Text))
+            {
+                StackBtn1.IsVisible = true;
+                StackBtn2.IsVisible = false;
+            }
+            else
+            {
+                StackBtn2.IsVisible = true;
+                StackBtn1.IsVisible = false;
+            }
+        }
+
+        public void Email_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(EAInput.Text) || string.IsNullOrEmpty(CCInput.Text) || string.IsNullOrEmpty(PWDInput.Text) || TermsCheck.IsChecked==false)
+            {
+                BtnClick1.IsVisible = true;
+                BtnClick2.IsVisible = false;
+            }
+            else
+            {
+                BtnClick2.IsVisible = true;
+                BtnClick1.IsVisible = false;
+            }
+        }
+
+        public void CommCode_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(EAInput.Text) || string.IsNullOrEmpty(CCInput.Text) || string.IsNullOrEmpty(PWDInput.Text) || TermsCheck.IsChecked == false)
+            {
+                BtnClick1.IsVisible = true;
+                BtnClick2.IsVisible = false;
+            }
+            else
+            {
+                BtnClick2.IsVisible = true;
+                BtnClick1.IsVisible = false;
+            }
+        }
+
+        public void Password_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(EAInput.Text) || string.IsNullOrEmpty(CCInput.Text) || string.IsNullOrEmpty(PWDInput.Text) || TermsCheck.IsChecked == false)
+            {
+                BtnClick1.IsVisible = true;
+                BtnClick2.IsVisible = false;
+            }
+            else
+            {
+                BtnClick2.IsVisible = true;
+                BtnClick1.IsVisible = false;
+            }
+        }
+        void InitStates()
         {
             var stateGroup = new VisualStateGroup
             {
@@ -174,11 +269,11 @@ namespace PeerCover.Views
             };
 
             stateGroup.States.Add(CreateState("Blank", "", Color.White));
-            stateGroup.States.Add(CreateState("VeryWeak", "Very Weak", Color.Red));
-            stateGroup.States.Add(CreateState("Weak", "Weak", Color.Orange));
-            stateGroup.States.Add(CreateState("Medium", "Good", Color.GreenYellow));
-            stateGroup.States.Add(CreateState("String", "Strong", Color.LightGreen));
-            stateGroup.States.Add(CreateState("VeryStrong", "Very Strong", Color.LightGreen));
+            stateGroup.States.Add(CreateState("VeryWeak", "*", Color.Red));
+            stateGroup.States.Add(CreateState("Weak", "**", Color.Orange));
+            stateGroup.States.Add(CreateState("Medium", "***", Color.FromHex("FFDF00")));
+            stateGroup.States.Add(CreateState("String", "****", Color.FromHex("2FCF3F")));
+            stateGroup.States.Add(CreateState("VeryStrong", "*****", Color.FromHex("2FCF8F")));
 
             VisualStateManager.SetVisualStateGroups(this.StrengthIndicator, new VisualStateGroupList { stateGroup });
 
@@ -218,5 +313,11 @@ namespace PeerCover.Views
             };
         }
 
+
+        public void ShowSecondStack_Clicked(object sender, EventArgs e)
+        {
+            FirstStack.IsVisible = false;
+            SecondStack.IsVisible = true;
+        }
     }
 }

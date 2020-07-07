@@ -37,8 +37,8 @@
                                                     <StackLayout Orientation="Vertical" Grid.Column="0">
                                                         <Label Text="{Binding transType}" TextColor="{StaticResource TxtColor}" FontSize="Subtitle" FontAttributes="Bold" FontFamily="OpenSans"/>
                                                         <StackLayout Grid.Row="1" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
-                                                            <Label FontSize="Body" TextColor="{StaticResource TxtColor}" Text="Policy No:"/>
-                                                            <Label FontSize="Body" TextColor="{StaticResource TxtColor}" Text="{Binding policy_number}"/>
+                                                            <Label FontSize="Small" TextColor="{StaticResource TxtColor}" Text="Policy No:"/>
+                                                            <Label FontSize="Small" TextColor="{StaticResource TxtColor}" Text="{Binding policy_number}"/>
                                                         </StackLayout>
                                                         <Label Text="{Binding PmtAmountFormat}" FontSize="Body" TextColor="{StaticResource TxtColor}"/>
                                                     </StackLayout>

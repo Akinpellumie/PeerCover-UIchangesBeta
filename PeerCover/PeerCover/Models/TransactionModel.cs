@@ -58,7 +58,7 @@ namespace PeerCover.Models
                 }
                 else if (payment_status.Contains("Successful"))
                 {
-                    return Color.Green;
+                    return Color.FromHex("2fcf8f");
                 }
                 else if (payment_status.Contains("Failed"))
                 {

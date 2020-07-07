@@ -22,7 +22,7 @@ namespace PeerCover.Models
             {
                 if (status.Contains("Accepted"))
                 {
-                    return Color.FromHex("37CA4B");
+                    return Color.FromHex("2fcf8f");
                 }
                 else if (status.Contains("Declined"))
                 {
@@ -38,7 +38,16 @@ namespace PeerCover.Models
         {
             get
             {
-                return this.firstname + "  " + this.lastname + " " + "wants to join the community."; 
+                if (status.Contains("Accepted"))
+                {
+                    return this.firstname + "  " + this.lastname + " " + "has been accepted to the community.";
+                }
+                else if (status.Contains("Declined"))
+                {
+                    return this.firstname + "  " + this.lastname + "'s " + " " + "request has been declined.";
+                }
+
+                return this.firstname + "  " + this.lastname + " " + "wants to join the community.";
             }
         }
     }
@@ -65,7 +74,7 @@ namespace PeerCover.Models
             {
                 if (status.Contains("Accepted"))
                 {
-                    return Color.FromHex("37CA4B");
+                    return Color.FromHex("2fcf8f");
                 }
                 else if (status.Contains("Declined"))
                 {

@@ -117,7 +117,7 @@ namespace PeerCover.Models
                 }
                 else if (status.Contains("Paid"))
                 {
-                    return Color.Green;
+                    return Color.FromHex("2fcf8f");
                 }
                 return Color.FromHex("FA9917");
             }

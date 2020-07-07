@@ -108,23 +108,24 @@ namespace PeerCover.Views
             await ((Frame)sender).ScaleTo(0.8, length: 50, Easing.Linear);
             await Task.Delay(100);
             await ((Frame)sender).ScaleTo(1, length: 50, Easing.Linear);
-            //frmAstra.IsVisible = false;
-            //frmAstra2.IsVisible = true;
-            //frmDebCard.IsVisible = false;
-            //frmDebCard2.IsVisible = true;
 
-
-            spin.IsVisible = true;
             try
             {
                 if (SinSubPay.IsVisible == false)
                 {
                     await DisplayAlert("Oops", "Kindly Select a Subscription above", "Ok");
-                    spinB.IsVisible = false;
+                    spin.IsVisible = false;
 
                     return;
                 }
 
+                if(stats.StartsWith("Pa"))
+                {
+                    await DisplayAlert("Oops!","You've already paid for this subscription.","Ok");
+                    return;
+                }
+
+                spin.IsVisible = true;
                 if (!string.IsNullOrEmpty(NumId))
                 {
                     var url = Helper.ExpiredImgUrl + NumId;
@@ -249,20 +250,14 @@ CallAstraPay()
             await ((Frame)sender).ScaleTo(0.8, length: 50, Easing.Linear);
             await Task.Delay(100);
             await ((Frame)sender).ScaleTo(1, length: 50, Easing.Linear);
-            //frmAstra.IsVisible = false;
-            //frmAstra2.IsVisible = true;
-            //frmDebCard.IsVisible = false;
-            //frmDebCard2.IsVisible = true;
 
-            //if (stats.Contains("Paid"))
-            //{
-            //    await DisplayAlert("Oops!", "This subscription has already been paid for. ", "Ok");
-            //    return;
 
-            //}
+            if (stats.StartsWith("Pa"))
+            {
+                await DisplayAlert("Oops!", "You've already paid for this subscription.", "Ok");
+                return;
+            }
 
-            //else
-            //{
             spin1B.IsVisible = true;
             try
             {
@@ -332,15 +327,12 @@ CallAstraPay()
             await Task.Delay(100);
             await ((Frame)sender).ScaleTo(1, length: 50, Easing.Linear);
 
-            //if (stats.Contains("Paid"))
-            //{
-            //    await DisplayAlert("Oops!", "This subscription has already been paid for. ", "Ok");
-            //    return;
+            if (stats.StartsWith("Pa"))
+            {
+                await DisplayAlert("Oops!", "You've already paid for this subscription.", "Ok");
+                return;
+            }
 
-            //}
-
-            //else
-            //{
             if (BnkOpts.IsVisible == false)
             {
                 BnkOpts.IsVisible = true;

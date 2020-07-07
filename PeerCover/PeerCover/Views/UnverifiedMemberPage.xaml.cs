@@ -116,12 +116,12 @@ namespace PeerCover.Views
 
             if (string.IsNullOrEmpty(ProfileImage))
             {
-                FlyOutImage.Source = "placeholder.png";
+                DashImage.Source = "undrawPro.svg";
             }
             else
             {
                 var imgUrl = Helper.ImageUrl + ProfileImage;
-                FlyOutImage.Source = imgUrl;
+                DashImage.Source = imgUrl;
             }
         }
     }

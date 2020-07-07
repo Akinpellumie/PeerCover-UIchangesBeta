@@ -57,14 +57,15 @@
                             </Grid.ColumnDefinitions>
                             <BoxView BackgroundColor="White" Opacity="0.7" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
                             <pv:PancakeView Grid.Column="0" HasShadow="True" HeightRequest="76" WidthRequest="76" CornerRadius="38" Margin="20,0,20,0"
-                                HorizontalOptions="Start" VerticalOptions="Center" BackgroundGradientAngle="180">
+                                HorizontalOptions="Start" VerticalOptions="Center" BorderIsDashed="True" BorderThickness="1" 
+                                                           BorderColor="Accent" BackgroundGradientAngle="180">
                                 <pv:PancakeView.BackgroundGradientStops>
                                     <pv:GradientStopCollection>
                                         <pv:GradientStop Color="White" Offset="0"/>
                                         <pv:GradientStop Color="WhiteSmoke" Offset="1"/>
                                     </pv:GradientStopCollection>
                                 </pv:PancakeView.BackgroundGradientStops>
-                                <ff1:SvgCachedImage Margin="3,0,3,0" HeightRequest="100" x:Name="UserImagePro"
+                                <ff1:SvgCachedImage HeightRequest="100" x:Name="UserImagePro"
                                      WidthRequest="100" Grid.RowSpan="2"
                                     Aspect="AspectFill"  HorizontalOptions="Center" VerticalOptions="Center"/>
                             </pv:PancakeView>

@@ -19,6 +19,8 @@ namespace PeerCover.Views
     public partial class PopUpPay
     {
         string transId;
+        string selectedMethod;
+
         public PopUpPay(string txnId)
         {
             transId = txnId;
@@ -26,8 +28,17 @@ namespace PeerCover.Views
             PickMethod.BindingContext = new PaymentMethViewModel();
         }
 
+        public void SelectedItem_clicked(object sender, EventArgs e)
+        {
+            selectedMethod = (PickMethod.SelectedItem as PaymentMethods).Value;
+        }
         public async void VerifyPayment_Clicked(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(selectedMethod))
+            {
+                await DisplayAlert("Oops!", "Kindly select a payment method to continue!", "Ok");
+                return;
+            }
             try
             {
             indicator.IsRunning = true;

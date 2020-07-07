@@ -41,7 +41,7 @@ namespace PeerCover.Views
         {
             await Navigation.PushAsync(new ForgotPassword());
         }
-        public async void SignUpClicked(object sender, EventArgs e)
+        private async void SignUpClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SignUp());
         }

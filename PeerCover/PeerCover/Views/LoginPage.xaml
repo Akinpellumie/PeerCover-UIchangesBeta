@@ -125,10 +125,10 @@
                         TextColor="{StaticResource Primary}"  BackgroundColor="Transparent"
                        Clicked="SignUpClicked" x:Name="Register"/>-->
 
-                            <Label Text="Don't have an account yet?" Margin="0,5" TextColor="Accent" FontSize="Caption"/>
+                            <Label Text="Don't have an account yet?" Margin="0,5" TextColor="Accent" FontSize="Small"/>
 
                             <Label x:Name="Register" Margin="0,5"
-                        Text="Click Here!" TextColor="Accent" FontSize="Caption" TextDecorations="Underline">
+                        Text="Click Here!" TextColor="Accent" FontSize="Small" TextDecorations="Underline">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="SignUpClicked" />
                                 </Label.GestureRecognizers>

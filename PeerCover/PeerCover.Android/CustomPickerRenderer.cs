@@ -23,7 +23,6 @@ namespace PeerCover.Droid
             if (Control != null)
             {
                 Control.Background = new ColorDrawable(Android.Graphics.Color.Transparent);
-                Control.Typeface = this.Resources.GetFont(Resource.Font.opensans_regular);
             }
         }
     }

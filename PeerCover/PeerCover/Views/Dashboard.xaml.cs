@@ -23,6 +23,7 @@ namespace PeerCover.Views
             InitializeComponent();
             CheckInternet();
             Permission();
+            GetUserById();
             //GetSubs();
             GetSubDetails();
             LblName.Text = HelperAppSettings.Name;
@@ -273,12 +274,12 @@ namespace PeerCover.Views
             
             if (string.IsNullOrEmpty(ProfileImage))
             {
-                FlyOutImage.Source = "undrawPro.svg";
+                DashImage.Source = "undrawPro.svg";
             }
             else
             {
                 var imgUrl = Helper.ImageUrl + ProfileImage;
-                FlyOutImage.Source = imgUrl;
+                DashImage.Source = imgUrl;
             }
         }
      }

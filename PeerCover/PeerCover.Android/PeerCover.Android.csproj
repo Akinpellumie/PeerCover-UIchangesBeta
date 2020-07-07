@@ -64,10 +64,10 @@
       <Version>3.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>3.2.2</Version>
+      <Version>3.3.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>3.2.2</Version>
+      <Version>3.3.0</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
@@ -99,7 +99,7 @@
     <PackageReference Include="Xamarin.Firebase.Messaging">
       <Version>71.1740.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1080" />
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="Xamarin.Forms.PancakeView">
@@ -174,22 +174,13 @@
     <AndroidResource Include="Resources\drawable\astraIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\astraPay.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\bank.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\benz.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\calendar.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\camera.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\car.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\carImg.png" />
@@ -222,16 +213,10 @@
     <AndroidResource Include="Resources\drawable\domain.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\edit.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\editMe.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\email.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\forgotPwdIcn.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\hidePass.png" />
@@ -267,9 +252,6 @@
     <AndroidResource Include="Resources\drawable\payPremium.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\placeholder.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\plus1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -282,12 +264,6 @@
     <AndroidResource Include="Resources\drawable\showPass.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\signReg.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\signSuccess.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\starbox.png" />
   </ItemGroup>
   <ItemGroup>
@@ -295,9 +271,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\SubImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\successLoader.gif" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\upload.png" />
