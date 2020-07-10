@@ -1,6 +1,8 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace PeerCover.Views
@@ -8,10 +10,22 @@ namespace PeerCover.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PayWithCard : ContentPage
     {
-        public PayWithCard()
+        double amount;
+        string name = HelperAppSettings.Name;
+        string fname = HelperAppSettings.firstname;
+        string lname = HelperAppSettings.lastname;
+        string phone_number = HelperAppSettings.phonenumber;
+        string email = HelperAppSettings.email;
+        string consumer_mac = HelperAppSettings.AndroidId;
+        string tx_ref = TransHelper.transactionId;
+        int consumer_id = Int32.Parse(HelperAppSettings.id);
+        public PayWithCard(double pre)
         {
+            amount = pre;
+            App.Current.On<Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
             InitializeComponent();
-            PayCard.Source = Helper.CardPayUrl + TransHelper.transactionId;
+            var CardUrl = Helper.FlutterWebPayUrl + HelperAppSettings.username + "&amount=" + amount + "&ref=" + tx_ref + "&email=" + email + "&fname=" + fname + "&lname=" + lname;
+            PayCard.Source = CardUrl;
         }
 
         private void Payview_Navigating(object sender, WebNavigatingEventArgs e)
@@ -37,11 +51,11 @@ namespace PeerCover.Views
                 if (HelperAppSettings.priviledges.Contains("ADMIN"))
                 {
                     AppShell fpm = new AppShell();
-                    Application.Current.MainPage = fpm;
+                    Xamarin.Forms.Application.Current.MainPage = fpm;
                 }
                 else
                 {
-                    Application.Current.MainPage = new AppShellUser();
+                    Xamarin.Forms.Application.Current.MainPage = new AppShellUser();
                 }
                 //Shell.Current.Navigation.PopModalAsync();
                 return true;

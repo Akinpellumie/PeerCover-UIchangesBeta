@@ -84,21 +84,6 @@
                         </Frame.GestureRecognizers>
                     </Frame>
 
-                        <Frame x:Name="frmAstra2" IsVisible="False" BackgroundColor="#f5fafa" IsEnabled="True" IsClippedToBounds="True">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Row="0" Grid.Column="0" Source="astraIcon.png" WidthRequest="24" HeightRequest="24" Aspect="Fill"
-                               BackgroundColor="Transparent" HorizontalOptions="Center"/>
-
-                            <Label Grid.Row="0" Grid.Column="1" Text="Pay Using AstraPay" FontAttributes="Bold" 
-                                   TextColor="{StaticResource TxtColor}" VerticalOptions="Center" FontSize="13"/>
-                            <ff:CachedImage Grid.Row="0" Grid.Column="2" x:Name="spinB" Source="Spinner.gif" HeightRequest="24" Aspect="Fill" IsVisible="False" HorizontalOptions="End" Margin="0,0,5,0"/>
-                        </Grid>
-                    </Frame>
                     </StackLayout>
 
                     <StackLayout>
@@ -116,23 +101,8 @@
                                 <ff:CachedImage Grid.Row="0" Grid.Column="2" x:Name="spin1" Source="Spinner.gif" HeightRequest="24" Aspect="Fill" IsVisible="False" HorizontalOptions="End" Margin="0,0,5,0"/>
                             </Grid>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="PayWithCardNew_Clicked" NumberOfTapsRequired="1"/>
+                                <TapGestureRecognizer Tapped="PayWithCardClicked" NumberOfTapsRequired="1"/>
                             </Frame.GestureRecognizers>
-                        </Frame>
-
-                        <Frame BackgroundColor="#F8F5F5" IsVisible="False" IsEnabled="True" x:Name="frmDebCard2" IsClippedToBounds="True">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Row="0" WidthRequest="24" HeightRequest="24" Grid.Column="0" Source="debitCard.png" Aspect="Fill"
-                               BackgroundColor="Transparent" HorizontalOptions="Center"/>
-
-                                <Label Grid.Row="0" Grid.Column="1" Text="Pay Using Debit Card" FontAttributes="Bold" VerticalOptions="Center" TextColor="{StaticResource TxtColor}" FontSize="13"/>
-                                <ff:CachedImage Grid.Row="0" Grid.Column="2" x:Name="spin1B" Source="Spinner.gif" HeightRequest="24" Aspect="Fill" IsVisible="False" HorizontalOptions="End" Margin="0,0,5,0"/>
-                            </Grid>
                         </Frame>
                     </StackLayout>
 

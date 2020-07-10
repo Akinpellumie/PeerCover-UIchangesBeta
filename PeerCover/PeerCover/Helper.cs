@@ -27,7 +27,7 @@
         {
             get
             {
-                return "http://192.168.1.111:5503/payWithCard.html?ref=";
+                return "https://distracted-keller-c58be8.netlify.app";
             }
         }
         public static string bankUrl
@@ -58,6 +58,8 @@
         public static string fetchBankDetails { get { return Helper.domainurl + "/account/detail/"; } }
         public static string SignUpUrl { get { return Helper.domainurl + "/member/"; } }
         public static string LoginUrl { get { return Helper.domainurl + "/user_auth/"; } }
+        public static string FlutterWebPayUrl { get { return Helper.CardPayUrl + "/makepaymentmobile?username="; } }
+        public static string CardFilter { get { return "&amount="; } }
         public static string AppTokenUrl { get { return Helper.domainurl + "/members/registrationToken"; } }
         public static string TransactionUrl { get { return Helper.domainurl + "/transaction?username="; } }
         public static string VerifyBankPayUrl { get { return Helper.domainurl + "/transaction/verify/bankPayments/"; } }

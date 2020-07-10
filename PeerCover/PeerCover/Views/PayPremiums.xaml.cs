@@ -12,6 +12,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PeerCover.GroupHelper;
+using PeerCover.Utils;
 
 namespace PeerCover.Views
 {
@@ -214,11 +215,10 @@ CallAstraPay()
                         TransHelper.transactionId = pro.transactionId;
                         TransHelper.inHubRefNum = pro.inHubRefNum;
                         await Navigation.PushAsync(new AstraWebView());
-                        spinB.IsVisible = false;
                     }
                     else
                     {
-                        await DisplayAlert("Oops!", "Please try again Later!", "Ok");
+                        await DisplayAlert("Oops!", "Server error! Please try again Later!", "Ok");
                         //spinB.IsVisible = false;
                     }
                 }
@@ -251,25 +251,21 @@ CallAstraPay()
             await Task.Delay(100);
             await ((Frame)sender).ScaleTo(1, length: 50, Easing.Linear);
 
-
-            if (stats.StartsWith("Pa"))
-            {
-                await DisplayAlert("Oops!", "You've already paid for this subscription.", "Ok");
-                return;
-            }
-
-            spin1B.IsVisible = true;
             try
             {
                 if (SinSubPay.IsVisible == false)
                 {
                     await DisplayAlert("Oops", "Kindly Select a Subscription above", "Ok");
-                    spin1B.IsVisible = false;
                     return;
                 }
-
+                if (stats.StartsWith("Pa"))
+                {
+                    await DisplayAlert("Oops!", "You've already paid for this subscription.", "Ok");
+                    return;
+                }
                 else
                 {
+                    spin1.IsVisible = true;
                     TransactionModel txndetails = new TransactionModel()
                     {
                         subscriptionId = NumId,
@@ -282,7 +278,7 @@ CallAstraPay()
                         vehicleMake = vehMk,
                         communityCode = HelperAppSettings.community_code,
                         transactionType = "premium",
-                        paymentMethod = "Paystack",
+                        paymentMethod = "Flutterwave",
 
                     };
                     var p = pre;
@@ -307,15 +303,20 @@ CallAstraPay()
                         TransHelper.referenceNumber = pro.transactionReferenceNumber;
                         TransHelper.transactionId = pro.transactionId;
                         TransHelper.inHubRefNum = pro.inHubRefNum;
-
-                        await Navigation.PushAsync(new PayWithCard());
-                        spin1B.IsVisible = false;
+                        spin1.IsVisible = false;
+                        await Navigation.PushAsync(new PayWithCard(pre));
+                    }
+                    else
+                    {
+                        await DisplayAlert("Oops!","Server error! Please try again later!","Ok");
+                        spin1.IsVisible = false;
+                        return;
                     }
                 }
             }
             catch (Exception)
             {
-                spin1B.IsVisible = false;
+                spin1.IsVisible = false;
                 return;
             }
         }
@@ -453,6 +454,12 @@ CallOverCounterPay()
                 Indic.IsVisible = false;
                 await PopupNavigation.Instance.PushAsync(new PopUpPay(txnId));
                 spin2.IsVisible = false;
+            }
+            else
+            {
+                Indic.IsVisible = false;
+                spin2.IsVisible = false;
+                await DisplayAlert("Ooops!","Server error! Please try again later","Ok");
             }
         }
     }
