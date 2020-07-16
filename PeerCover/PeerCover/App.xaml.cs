@@ -36,14 +36,13 @@ namespace PeerCover
         {
             // Handle when your app sleeps
         }
-
+        
         protected override void OnResume()
         {
             // Handle when your app resumes
             CheckInternet();
-            CheckToken();
-
-
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
+            
         }
 
         async void CheckInternet()

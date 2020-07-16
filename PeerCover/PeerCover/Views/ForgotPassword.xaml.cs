@@ -53,7 +53,7 @@ namespace PeerCover.Views
             if (response.IsSuccessStatusCode)
             {
                 await PopupNavigation.Instance.PopAsync(true);
-                await DisplayAlert("InHub", "Kindly check your mailbox for new password", "Ok");
+                await DisplayAlert("Success!", "Kindly check your mailbox for new password", "Ok");
                 ContentPage fpm = new LoginPage();
                 Application.Current.MainPage = fpm;
                 indicator.IsVisible = false;

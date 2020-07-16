@@ -118,11 +118,11 @@ namespace PeerCover.Utils
         //            "</html>"
         //    };
 
-        //}
-        private void Payview_Navigated(object sender, WebNavigatedEventArgs e)
-        {
-            Indic.IsVisible = false;
-        }
+        // }
+            private void Payview_Navigated(object sender, WebNavigatedEventArgs e)
+            {
+                Indic.IsVisible = false;
+            }
 
         protected override bool OnBackButtonPressed()
         {

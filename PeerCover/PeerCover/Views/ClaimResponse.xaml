@@ -69,17 +69,17 @@
                     </StackLayout>
                 </StackLayout>
 
-                <StackLayout x:Name="ActionSect" IsVisible="True" Margin="15" VerticalOptions="EndAndExpand">
+                <StackLayout x:Name="ActionSect" IsVisible="True" Margin="3,15,3,15" VerticalOptions="EndAndExpand">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" VerticalOptions="EndAndExpand" FontSize="Title" CornerRadius="50" FontFamily="OpenSans"
-                        HorizontalOptions="CenterAndExpand" TextColor="White" Clicked="AcceptClaimClicked"
+                        <Button Grid.Column="0" Padding="2" VerticalOptions="EndAndExpand" FontSize="Title" CornerRadius="50" FontFamily="OpenSans"
+                        HorizontalOptions="Fill" TextColor="White" Clicked="AcceptClaimClicked"
                          BackgroundColor="Accent" Text="Accept"/>
-                        <Button Grid.Column="1" VerticalOptions="EndAndExpand" FontSize="Title" CornerRadius="50" FontFamily="OpenSans"
-                         HorizontalOptions="CenterAndExpand" TextColor="White" Clicked="DeclinePopClicked"
+                        <Button Grid.Column="1" Padding="2" VerticalOptions="EndAndExpand" FontSize="Title" CornerRadius="50" FontFamily="OpenSans"
+                         HorizontalOptions="Fill" TextColor="White" Clicked="DeclinePopClicked"
                          BackgroundColor="#FA9917" Text="Decline"/>
                     </Grid>
                 </StackLayout>

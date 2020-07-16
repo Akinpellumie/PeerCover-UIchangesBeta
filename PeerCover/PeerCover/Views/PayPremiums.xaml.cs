@@ -27,20 +27,22 @@ namespace PeerCover.Views
         string txnId;
         string stats;
         string subId;
+        double Per;
+
         public PayPremiums()
         {
             InitializeComponent();
             GetSubDetails();
             CheckInternet();
-            MessagingCenter.Subscribe<PopUpload, string>(this, "Done", async (sender, arg) =>
-            {
-                if (!string.IsNullOrEmpty(arg))
-                {
-                    await CallAstraPay();
-                };
-                // Do something whenever the "Hi" message is received
-            });
-            //LoadSinPlan();
+            //MessagingCenter.Subscribe<PopUpload, string>(this, "Done", async (sender, arg) =>
+            //{
+            //    if (!string.IsNullOrEmpty(arg))
+            //    {
+            //        await CallAstraPay();
+            //    };
+            //    // Do something whenever the "Hi" message is received
+            //});
+            ////LoadSinPlan();
         }
 
         async void CheckInternet()
@@ -188,7 +190,7 @@ CallAstraPay()
                         policyNumber = polNo,
                         vehicleMake = vehMk,
                         communityCode = HelperAppSettings.community_code,
-                        transactionType = "premium",
+                        transactionType = "Premium",
                         paymentMethod = "Astra Pay",
 
                     };
@@ -263,8 +265,37 @@ CallAstraPay()
                     await DisplayAlert("Oops!", "You've already paid for this subscription.", "Ok");
                     return;
                 }
-                else
+
+                if (SinSubPay.IsVisible == true && pre != null)
                 {
+                    var prem = pre.ToString();
+                  
+                    Per = pre * 0.015;
+                    double Sum = Per + pre;
+                    bool result = await DisplayAlert("Alert", "A total of" + " " + "NGN " + Sum + " will be deducted from your account." , "Continue", "Cancel");
+                    if (result == true)
+                    {
+                        CallPayWithCard();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                return;
+            }
+         }
+
+        async
+        Task
+        CallPayWithCard()
+        {
+            try
+            {
                     spin1.IsVisible = true;
                     TransactionModel txndetails = new TransactionModel()
                     {
@@ -277,7 +308,7 @@ CallAstraPay()
                         policyNumber = polNo,
                         vehicleMake = vehMk,
                         communityCode = HelperAppSettings.community_code,
-                        transactionType = "premium",
+                        transactionType = "Premium",
                         paymentMethod = "Flutterwave",
 
                     };
@@ -308,18 +339,19 @@ CallAstraPay()
                     }
                     else
                     {
-                        await DisplayAlert("Oops!","Server error! Please try again later!","Ok");
+                        await DisplayAlert("Oops!", "Server error! Please try again later!", "Ok");
                         spin1.IsVisible = false;
                         return;
                     }
-                }
             }
             catch (Exception)
             {
                 spin1.IsVisible = false;
                 return;
             }
+
         }
+
 
 
         public async void OnBankTrans_Clicked(object sender, EventArgs e)
@@ -347,6 +379,7 @@ CallAstraPay()
                 BnkOpts.IsVisible = false;
             }
         }
+
 
         public async void PaymentClicked(object sender, EventArgs e)
         {
@@ -418,7 +451,7 @@ CallOverCounterPay()
                 policyNumber = polNo,
                 vehicleMake = vehMk,
                 communityCode = HelperAppSettings.community_code,
-                transactionType = "premium",
+                transactionType = "Premium",
                 paymentMethod = "Over the Counter",
 
             };

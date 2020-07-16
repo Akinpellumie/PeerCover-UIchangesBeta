@@ -36,6 +36,7 @@ namespace PeerCover.Views
         double Latitude;
         double Longitude;
         string PckCause;
+        string selectedCause;
 
         public MakeClaim(string subscription_id)
         {
@@ -107,7 +108,8 @@ namespace PeerCover.Views
 
                     if (file != null)
                     {
-                        LblImg1.Text = file.AlbumPath;
+                        LblImg1.Text = "Please wait while image is uploading....";
+                        LblImg1.FadeTo(1, 200);
 
                     }
 
@@ -130,7 +132,18 @@ namespace PeerCover.Views
                     {
 
                         ImageName1 = responseeee;
+                        LblImg1.Text = "Image Uploaded Successfully....";
 
+                        if (string.IsNullOrEmpty(ImageName1) || string.IsNullOrEmpty(ImageName2) || string.IsNullOrEmpty(ImageName3) || string.IsNullOrEmpty(docName))
+                        {
+                            Submit_Btn.IsVisible = true;
+                            Submit_Btn2.IsVisible = false;
+                        }
+                        else
+                        {
+                            Submit_Btn.IsVisible = false;
+                            Submit_Btn2.IsVisible = true;
+                        }
                     }
                     else if (k.StatusCode == 401)
                     {
@@ -181,7 +194,8 @@ namespace PeerCover.Views
 
                     if (file != null)
                     {
-                        LblImg2.Text = file.AlbumPath;
+                        LblImg2.Text = "Please wait while image is uploading....";
+                        LblImg2.FadeTo(1, 200);
 
                     }
 
@@ -204,7 +218,18 @@ namespace PeerCover.Views
                     {
 
                         ImageName2 = responseeee;
+                        LblImg2.Text = "Image Uploaded Successfully....";
 
+                        if (string.IsNullOrEmpty(ImageName1) || string.IsNullOrEmpty(ImageName2) || string.IsNullOrEmpty(ImageName3) || string.IsNullOrEmpty(docName))
+                        {
+                            Submit_Btn.IsVisible = true;
+                            Submit_Btn2.IsVisible = false;
+                        }
+                        else
+                        {
+                            Submit_Btn.IsVisible = false;
+                            Submit_Btn2.IsVisible = true;
+                        }
                     }
                     else if (k.StatusCode == 401)
                     {
@@ -259,8 +284,8 @@ namespace PeerCover.Views
 
                     if (file != null)
                     {
-                        LblImg3.Text = file.AlbumPath;
-
+                        LblImg3.Text = "Please wait while image is uploading....";
+                        LblImg3.FadeTo(1, 200);
                     }
 
                     ImageSource.FromStream(() => file.GetStream());
@@ -282,7 +307,18 @@ namespace PeerCover.Views
                     {
 
                         ImageName3 = responseeee;
+                        LblImg3.Text = "Image Uploaded Successfully....";
 
+                        if (string.IsNullOrEmpty(ImageName1) || string.IsNullOrEmpty(ImageName2) || string.IsNullOrEmpty(ImageName3) || string.IsNullOrEmpty(docName))
+                        {
+                            Submit_Btn.IsVisible = true;
+                            Submit_Btn2.IsVisible = false;
+                        }
+                        else
+                        {
+                            Submit_Btn.IsVisible = false;
+                            Submit_Btn2.IsVisible = true;
+                        }
                     }
                     else if (k.StatusCode == 401)
                     {
@@ -337,8 +373,8 @@ namespace PeerCover.Views
 
                     if (file != null)
                     {
-                        LblDoc.Text = file.AlbumPath;
-
+                        LblDoc.Text = "Please wait while document is uploading....";
+                        LblDoc.FadeTo(1, 200);
                     }
 
                     ImageSource.FromStream(() => file.GetStream());
@@ -360,7 +396,18 @@ namespace PeerCover.Views
                     {
 
                         docName = responseeee;
+                        LblDoc.Text = "Document Uploaded Successfully....";
 
+                        if (string.IsNullOrEmpty(ImageName1) || string.IsNullOrEmpty(ImageName2) || string.IsNullOrEmpty(ImageName3) || string.IsNullOrEmpty(docName))
+                        {
+                            Submit_Btn.IsVisible = true;
+                            Submit_Btn2.IsVisible = false;
+                        }
+                        else
+                        {
+                            Submit_Btn.IsVisible = false;
+                            Submit_Btn2.IsVisible = true;
+                        }
                     }
                     else if (k.StatusCode == 401)
                     {
@@ -399,6 +446,12 @@ namespace PeerCover.Views
         {
             PckCause = (PickCauses.SelectedItem as Causes).Value;
 
+        }
+
+        private void CausesPck_SelectedItem(object sender, EventArgs e)
+        {
+            var PickCause = (PickCauses.SelectedItem as Causes).Value;
+            selectedCause = PickCause;
         }
 
         async void Fetchdetails()
@@ -455,15 +508,22 @@ namespace PeerCover.Views
 
         public void CostInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(((Entry)sender).Text))
+            try
             {
+                if (!string.IsNullOrEmpty(((Entry)sender).Text))
+                {
 
 
-                var t = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
-                ((Entry)sender).Text = t;
-                ((Entry)sender).CursorPosition = t.Length - 3;
+                    var t = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
+                    ((Entry)sender).Text = t;
+                    ((Entry)sender).CursorPosition = t.Length - 3;
+                }
+
             }
-
+            catch (Exception)
+            {
+                return;
+            }
 
         }
 
@@ -476,18 +536,17 @@ namespace PeerCover.Views
             }
 
             if (string.IsNullOrEmpty(MaACNInput.Text) || string.IsNullOrEmpty(MaANMInput.Text) || string.IsNullOrEmpty(RecInput.Text) || string.IsNullOrEmpty(CostInput.Text))
-            {;
+            {
                 await DisplayAlert("Oops!", "Input fields cannot be empty", "Ok");
                 MaACNInput.PlaceholderColor = Color.Red;
                 MaANMInput.PlaceholderColor = Color.Red;
                 RecInput.PlaceholderColor = Color.Red;
                 CostInput.PlaceholderColor = Color.Red;
-
                 return;
             }
-            if(string.IsNullOrEmpty(LblDoc.Text) || string.IsNullOrEmpty(LblImg1.Text) || string.IsNullOrEmpty(LblImg2.Text) || string.IsNullOrEmpty(LblImg3.Text))
+            if(string.IsNullOrEmpty(docName) || string.IsNullOrEmpty(ImageName1) || string.IsNullOrEmpty(ImageName2) || string.IsNullOrEmpty(ImageName3))
             {
-                await DisplayAlert("Oops!","Please check if you've capture all required Images and documents.","Ok");
+                await DisplayAlert("Oops!","Please check if you've capture all required Images and documents or re-upload images.","Ok");
                 return;
             }
             await PopupNavigation.Instance.PushAsync(new PopLoader());
@@ -616,35 +675,51 @@ namespace PeerCover.Views
 
         public async void GetUserById()
         {
-            HttpClient client = new HttpClient();
-            var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+            try
+            {
+                HttpClient client = new HttpClient();
+                var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
 
-            var result = await client.GetStringAsync(UserdetailEndpoint);
-            var MemberDetails = JsonConvert.DeserializeObject<MemberDetailsModel>(result);
-            AcctDetailsStack.BindingContext = MemberDetails.member[0];
-            MaACNInput.BindingContext = MemberDetails.member[0];
-            MaANMInput.BindingContext = MemberDetails.member[0];
-            MaBankPicker.BindingContext = MemberDetails.member[0];
-            MaBankPicker.Title = MemberDetails.member[0].bankname;
-            bnkCde = MemberDetails.member[0].bank_code;
-            bnkNm = MemberDetails.member[0].bankname;
+                var result = await client.GetStringAsync(UserdetailEndpoint);
+                var MemberDetails = JsonConvert.DeserializeObject<MemberDetailsModel>(result);
+                AcctDetailsStack.BindingContext = MemberDetails.member[0];
+                MaACNInput.BindingContext = MemberDetails.member[0];
+                MaANMInput.BindingContext = MemberDetails.member[0];
+                MaBankPicker.BindingContext = MemberDetails.member[0];
+                MaBankPicker.Title = MemberDetails.member[0].bankname;
+                bnkCde = MemberDetails.member[0].bank_code;
+                bnkNm = MemberDetails.member[0].bankname;
+
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
         public void Input_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (e.NewTextValue.Length >= 1)
+            try
             {
-                MaACNInput.TextColor = Color.Default;
-            }
-
-            if (MaBankPicker.SelectedItem != null && string.IsNullOrEmpty(MaACNInput.Text) == false)
-            {
-                if (e.NewTextValue.Length == 10)
+                if (e.NewTextValue.Length >= 1)
                 {
-                    Fetchdetails();
+                    MaACNInput.TextColor = Color.Default;
                 }
 
+                if (MaBankPicker.SelectedItem != null && string.IsNullOrEmpty(MaACNInput.Text) == false)
+                {
+                    if (e.NewTextValue.Length == 10)
+                    {
+                        Fetchdetails();
+                    }
+
+                }
+
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
         public void Input2_TextChanged(object sender, TextChangedEventArgs e)
@@ -661,12 +736,36 @@ namespace PeerCover.Views
             public string ImageName3 { get; set; }
         }
 
-        public void MainScrn_clicked(object sender, EventArgs e)
+        public async void MainScrn_clicked(object sender, EventArgs e)
         {
-            AcctDetailsStack.IsVisible = true;
-            MainDetails.IsVisible = false;
+                if (string.IsNullOrEmpty(RecInput.Text) || string.IsNullOrEmpty(CostInput.Text) || string.IsNullOrEmpty(MaACNInput.Text) || string.IsNullOrEmpty(MaANMInput.Text) || string.IsNullOrEmpty(selectedCause))
+                {
+                    MainDetails.IsVisible = true;
+                    AcctDetailsStack.IsVisible = false;
+                    await DisplayAlert("Alert","Kindly fill in all input fields and select the cause of accident","Ok");
+                    return;
+                }
+                else
+                {
+                    MainDetails.IsVisible = false;
+                    AcctDetailsStack.IsVisible = true;
+                }
+         
         }
 
+        public void CostInput_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(CostInput.Text) || string.IsNullOrEmpty(RecInput.Text) || string.IsNullOrEmpty(MaACNInput.Text) || string.IsNullOrEmpty(MaANMInput.Text) || string.IsNullOrEmpty(selectedCause))
+            {
+                Cont_Btn.IsVisible = true;
+                Cont_Btn2.IsVisible = false;
+            }
+            else
+            {
+                Cont_Btn.IsVisible = false;
+                Cont_Btn2.IsVisible = true;
+            }
+        }
         public void AcctScrn_clicked(object sender, EventArgs e)
         {
             AcctDetailsStack.IsVisible = false;
@@ -699,11 +798,13 @@ namespace PeerCover.Views
             catch (FeatureNotSupportedException)
             {
                 await DisplayAlert("Oops!","Location is Not Supported","Ok");
+                Permission();
                 return;
             }
             catch (FeatureNotEnabledException)
             {
                 await DisplayAlert("Oops!", "Location Feature is Not Enabled", "Ok");
+                Permission();
                 return;
             }
             catch (PermissionException)
@@ -721,6 +822,49 @@ namespace PeerCover.Views
         {
             base.OnAppearing();
             GetLocation();
+        }
+
+        private void RecInput_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(CostInput.Text) || string.IsNullOrEmpty(RecInput.Text) || string.IsNullOrEmpty(MaACNInput.Text) || string.IsNullOrEmpty(MaANMInput.Text) || string.IsNullOrEmpty(selectedCause))
+            {
+                Cont_Btn.IsVisible = true;
+                Cont_Btn2.IsVisible = false;
+              
+            }
+            else
+            {
+                Cont_Btn.IsVisible = false;
+                Cont_Btn2.IsVisible = true;
+            }
+        }
+
+        private void MaACNInput_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(CostInput.Text) || string.IsNullOrEmpty(RecInput.Text) || string.IsNullOrEmpty(MaACNInput.Text) || string.IsNullOrEmpty(MaANMInput.Text) || string.IsNullOrEmpty(selectedCause))
+            {
+                Cont_Btn.IsVisible = true;
+                Cont_Btn2.IsVisible = false;
+            }
+            else
+            {
+                Cont_Btn.IsVisible = false;
+                Cont_Btn2.IsVisible = true;
+            }
+        }
+        private void MaANMInput_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (string.IsNullOrEmpty(CostInput.Text) || string.IsNullOrEmpty(RecInput.Text) || string.IsNullOrEmpty(MaACNInput.Text) || string.IsNullOrEmpty(MaANMInput.Text) || string.IsNullOrEmpty(selectedCause))
+            {
+                Cont_Btn.IsVisible = true;
+                Cont_Btn2.IsVisible = false;
+                
+            }
+            else
+            {
+                Cont_Btn.IsVisible = false;
+                Cont_Btn2.IsVisible = true;
+            }
         }
     }
 }
