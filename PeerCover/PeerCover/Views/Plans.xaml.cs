@@ -34,39 +34,54 @@ namespace PeerCover.Views
 
         public async void GetSubDetails()
         {
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
-
-
-            HttpClient client = new HttpClient();
-            var UserCountEndpoint = Helper.getActiveSubUrl + HelperAppSettings.username + "&isActive=1";
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-
-            var result = await client.GetStringAsync(UserCountEndpoint);
-            var UsersCnt = JsonConvert.DeserializeObject<ActSubModel>(result);
-
-            ActivePlanList.ItemsSource = UsersCnt.subscriptions;
-
-            if (UsersCnt.subscriptions.Count == 0)
+            try
             {
-                FrmPLB.IsVisible = true;
-                PlanActList.IsVisible = false;
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
+
+                HttpClient client = new HttpClient();
+                var UserCountEndpoint = Helper.getActiveSubUrl + HelperAppSettings.username + "&isActive=1";
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+
+                var result = await client.GetStringAsync(UserCountEndpoint);
+                var UsersCnt = JsonConvert.DeserializeObject<ActSubModel>(result);
+
+                ActivePlanList.ItemsSource = UsersCnt.subscriptions;
+
+                if (UsersCnt.subscriptions.Count == 0)
+                {
+                    FrmPLB.IsVisible = true;
+                    PlanActList.IsVisible = false;
+                }
+                else
+                {
+                    PlanActList.IsVisible = true;
+                    FrmPLB.IsVisible = false;
+                }
+                indicator.IsRunning = false;
+                indicator.IsVisible = false;
+
             }
-            else
+            catch (Exception)
             {
-                PlanActList.IsVisible = true;
-                FrmPLB.IsVisible = false;
+                await DisplayAlert("Oops!","Server unavailable. Please check your internet connection.","Ok");
+                return;
             }
-            indicator.IsRunning = false;
-            indicator.IsVisible = false;
         }
 
         public async void ViewSubTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item == null) return;
+            try
+            {
+                if (e.Item == null) return;
             var selectedUser = e.Item as Models.SubscriptionModel;
             await Shell.Current.Navigation.PushAsync(new SinglePlan(selectedUser.subscription_id));
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
         }
         async void ReadMoreClicked(object sender, EventArgs e)

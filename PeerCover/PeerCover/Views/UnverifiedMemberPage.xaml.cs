@@ -37,26 +37,29 @@ namespace PeerCover.Views
         }
 
         public async void GetSubs()
-
         {
             indicator.IsRunning = true;
             indicator.IsVisible = true;
 
+            try
+            {
+                HttpClient client = new HttpClient();
+                var dashboardEndpoint = Helper.GetPlansUrl;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(dashboardEndpoint);
+                var PlanList = JsonConvert.DeserializeObject<PlansListModel>(result);
 
-            HttpClient client = new HttpClient();
-            var dashboardEndpoint = Helper.GetPlansUrl;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(dashboardEndpoint);
-            var PlanList = JsonConvert.DeserializeObject<PlansListModel>(result);
+                UnvPlanName.BindingContext = PlanList.plans[0];
+                UnvPlanDesc.BindingContext = PlanList.plans[0];
 
-            UnvPlanName.BindingContext = PlanList.plans[0];
-            UnvPlanDesc.BindingContext = PlanList.plans[0];
-
-
-
-            indicator.IsRunning = false;
-            indicator.IsVisible = false;
+            }
+            catch (Exception)
+            {
+                indicator.IsRunning = false;
+                indicator.IsVisible = false;
+                return;
+            }
         }
 
         async void ReadMoreClicked(object sender, EventArgs e)
@@ -66,21 +69,27 @@ namespace PeerCover.Views
 
         public void SignOutClicked(object sender, EventArgs e)
         {
-            ContentPage fpm = new LoginPage();
-            HelperAppSettings.Token = "";
-            HelperAppSettings.firstname = "";
-            HelperAppSettings.lastname = "";
-            HelperAppSettings.username = "";
-            HelperAppSettings.email = "";
-            HelperAppSettings.phonenumber = "";
-            HelperAppSettings.community_code = "";
-            HelperAppSettings.community_name = "";
-            HelperAppSettings.id = "";
-            HelperAppSettings.profile_img_url = "";
-            HelperAppSettings.priviledges = "";
-            HelperAppSettings.capName = "";
-            HelperAppSettings.Name = "";
-            Application.Current.MainPage = fpm;
+            try
+            {
+                HelperAppSettings.Token = "";
+                HelperAppSettings.firstname = "";
+                HelperAppSettings.lastname = "";
+                HelperAppSettings.username = "";
+                HelperAppSettings.email = "";
+                HelperAppSettings.phonenumber = "";
+                HelperAppSettings.community_code = "";
+                HelperAppSettings.community_name = "";
+                HelperAppSettings.id = "";
+                HelperAppSettings.profile_img_url = "";
+                HelperAppSettings.priviledges = "";
+                HelperAppSettings.capName = "";
+                HelperAppSettings.Name = "";
+                Application.Current.MainPage = new NavigationPage (new LoginPage());
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         public async void changePassClicked(object sender, EventArgs e)
@@ -90,11 +99,18 @@ namespace PeerCover.Views
 
         public async void SharingClicked(object sender, EventArgs e)
         {
-            await Share.RequestAsync(new ShareTextRequest
+            try
             {
-                Text = "Community Name:" + " " + HelperAppSettings.community_name + "," + " " + "Community Code:" + " " + HelperAppSettings.community_code,
-                Title = "Share Community Code!!!"
-            });
+                await Share.RequestAsync(new ShareTextRequest
+                {
+                    Text = "Community Name:" + " " + HelperAppSettings.community_name + "," + " " + "Community Code:" + " " + HelperAppSettings.community_code,
+                    Title = "Share Community Code!!!"
+                });
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         protected override async void OnAppearing()
@@ -104,24 +120,31 @@ namespace PeerCover.Views
         }
         public async void GetUserById()
         {
-            HttpClient client = new HttpClient();
-            var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-
-            var result = await client.GetStringAsync(UserdetailEndpoint);
-            var MemberDetails = JsonConvert.DeserializeObject<MemberDetailsModel>(result);
-
-            ProfileImage = MemberDetails.member[0].profile_img_url;
-
-            if (string.IsNullOrEmpty(ProfileImage))
+            try
             {
-                DashImage.Source = "undrawPro.svg";
+                HttpClient client = new HttpClient();
+                var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+
+                var result = await client.GetStringAsync(UserdetailEndpoint);
+                var MemberDetails = JsonConvert.DeserializeObject<MemberDetailsModel>(result);
+
+                ProfileImage = MemberDetails.member[0].profile_img_url;
+
+                if (string.IsNullOrEmpty(ProfileImage))
+                {
+                    DashImage.Source = "undrawPro.svg";
+                }
+                else
+                {
+                    var imgUrl = Helper.ImageUrl + ProfileImage;
+                    DashImage.Source = imgUrl;
+                }
             }
-            else
+            catch (Exception)
             {
-                var imgUrl = Helper.ImageUrl + ProfileImage;
-                DashImage.Source = imgUrl;
+                return;
             }
         }
     }

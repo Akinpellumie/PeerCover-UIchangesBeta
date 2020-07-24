@@ -4,8 +4,7 @@
        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        mc:Ignorable="d"
-       xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
-       xmlns:local="clr-namespace:PeerCover.Views"
+       xmlns:local="clr-namespace:PeerCover.Views" xmlns:controls="clr-namespace:PeerCover.Utils"
        Title="PeerCover"
        x:Class="PeerCover.AppShellUser"
       NavigationPage.HasNavigationBar="True">
@@ -31,40 +30,10 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <!-- Your Pages -->
-    <!--<TabBar>
-        <Tab Title="Browse" Icon="tab_feed.png">
-            <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
-        </Tab>
-        <Tab Title="About" Icon="tab_about.png">
-            <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
-        </Tab>
-    </TabBar>-->
+    <Shell.FlyoutHeader>
+        <controls:FlyoutHeader />
+    </Shell.FlyoutHeader>
 
-    <!--Optional Templates 
-    // These may be provided inline as below or as separate classes.
-
-    // This header appears at the top of the Flyout.-->
-
-            <Shell.FlyoutHeaderTemplate >
-        <DataTemplate>
-            <Frame HasShadow="True" BackgroundColor="{StaticResource NavigationPrimary}" HeightRequest="75">
-                <Image Source="AppLogo.png" Aspect="AspectFill" HorizontalOptions="CenterAndExpand"
-                       VerticalOptions="CenterAndExpand"
-                   HeightRequest="75" WidthRequest="150" BackgroundColor="Transparent"/>
-            </Frame>
-        </DataTemplate>
-    </Shell.FlyoutHeaderTemplate>
-
-    <!--// ItemTemplate is for ShellItems as displayed in a Flyout-->
-    <!--<Shell.ItemTemplate>
-        <DataTemplate>
-            <Tab Title="Browse" Icon="tab_feed.png">
-                <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
-            </Tab>
-            
-        </DataTemplate>
-    </Shell.ItemTemplate>-->
     <FlyoutItem Title="Menu" Shell.TabBarIsVisible="False"
                 FlyoutDisplayOptions="AsMultipleItems">
 
@@ -91,11 +60,8 @@
         </Tab>
     </FlyoutItem>
 
-    <!--<ShellContent Title="Settings and Privacy"
-                  Icon="info.png"
-                  ContentTemplate="{DataTemplate local:SettingsPrivacy}" />
-    <ShellContent Title="Sign Out"
-                  Icon="info.png"
-                  ContentTemplate="{DataTemplate local:SingleClaim}" />-->
+
+    <MenuItem Text="Logout" x:Name="myBtn"
+          Icon="logout.png" />
 
 </Shell>

@@ -75,10 +75,10 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Padding="2" VerticalOptions="EndAndExpand" FontSize="Title" CornerRadius="50" FontFamily="OpenSans"
+                        <Button Grid.Column="0" Padding="2" VerticalOptions="EndAndExpand" FontSize="Subtitle" CornerRadius="50" FontFamily="OpenSans"
                         HorizontalOptions="Fill" TextColor="White" Clicked="AcceptClaimClicked"
                          BackgroundColor="Accent" Text="Accept"/>
-                        <Button Grid.Column="1" Padding="2" VerticalOptions="EndAndExpand" FontSize="Title" CornerRadius="50" FontFamily="OpenSans"
+                        <Button Grid.Column="1" Padding="2" VerticalOptions="EndAndExpand" FontSize="Subtitle" CornerRadius="50" FontFamily="OpenSans"
                          HorizontalOptions="Fill" TextColor="White" Clicked="DeclinePopClicked"
                          BackgroundColor="#FA9917" Text="Decline"/>
                     </Grid>

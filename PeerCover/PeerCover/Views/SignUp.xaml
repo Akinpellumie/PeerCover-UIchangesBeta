@@ -8,6 +8,7 @@
              x:Class="PeerCover.Views.SignUp" Shell.NavBarIsVisible="True"
              NavigationPage.HasBackButton="True"
              NavigationPage.HasNavigationBar="True"
+             BackgroundColor="White"
              Title="Sign Up">
 
     <views:KeyboardView Padding="0,0,0,0"
@@ -41,7 +42,7 @@
 
                     <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
                         <Label Margin="7,3,5,2" x:Name="LblUser" Text="Username" TextColor="Gray"/>
-                        <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,0" CornerRadius="50">
+                        <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,0" x:Name="USNFrame" CornerRadius="50">
                             <Controls:CustomEntry  x:Name="USNInput" Margin="5,0,0,3" VerticalOptions="End" TextChanged="Input2_TextChanged" 
                                                            Unfocused="Username_Unfocused" Keyboard="Default"/>
                         </Frame>
@@ -59,7 +60,7 @@
                     <StackLayout x:Name="StackBtn1" IsVisible="True" Margin="0,20,0,0" VerticalOptions="End">
                         <Button Margin="5" FontSize="20" BorderRadius="6" HorizontalOptions="Fill"
                          HeightRequest="45" TextColor="White" CornerRadius="50" Opacity="0.6"
-                         BackgroundColor="#06afb9" Text="CONTINUE"/>
+                         BackgroundColor="#06afb9" Text="CONTINUE" Clicked="Button_Clicked_1"/>
                         
                         <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="Center" Orientation="Horizontal" BackgroundColor="Transparent">
                             <Label Text="Already a member?" Margin="0,2" TextColor="Accent" FontSize="Small"/>
@@ -111,9 +112,9 @@
 
                     <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
                         <Label Margin="7,3,5,2" Text="Community Code" TextColor="Gray"/>
-                        <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,0" CornerRadius="50">
+                        <Frame Style="{StaticResource FrameStyle}" Margin="5,0,10,0" x:Name="CCFrame" CornerRadius="50">
                             <Controls:CustomEntry  x:Name="CCInput" Margin="5,0,0,3" VerticalOptions="End"  Keyboard="Default"
-                                                   Unfocused="CommCode_Unfocused"/>
+                                                   Unfocused="CommCode_Unfocused" TextChanged="CommCode_TextChanged"/>
                         </Frame>
                     </StackLayout>
 
@@ -148,7 +149,7 @@
                         <StackLayout HorizontalOptions="Fill">
                             <StackLayout x:Name="BtnClick1" IsVisible="True">
                                 <Button Margin="5" FontSize="20" BorderRadius="6" HorizontalOptions="Fill"
-                         HeightRequest="45" TextColor="White" CornerRadius="50" Opacity="0.6"
+                         HeightRequest="45" TextColor="White" CornerRadius="50" Opacity="0.6" Clicked="Button_Clicked"
                          BackgroundColor="#06afb9" Text="SIGN UP"/>
                             </StackLayout>
 

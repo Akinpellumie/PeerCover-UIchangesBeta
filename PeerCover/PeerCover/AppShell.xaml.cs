@@ -1,10 +1,7 @@
-﻿using PeerCover.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System;
 using Xamarin.Forms;
-using System.Threading.Tasks;
+using System.Windows.Input;
+using PeerCover.Views;
 
 namespace PeerCover
 {
@@ -12,52 +9,44 @@ namespace PeerCover
     {
         public AppShell()
         {
-            AppShellModel appShell = new AppShellModel();
-            appShell.fullname = "Akinlade Akinpelumi";
-            appShell.commName1 = HelperAppSettings.community_name;
-            appShell.userName = HelperAppSettings.username;
-            BindingContext = appShell;
-            if (string.IsNullOrEmpty(HelperAppSettings.profile_img_url))
+            InitializeComponent();
+            myBtn.Clicked += (sender, e) => {
+                LogoutExit();
+            };
+        }
+
+        public ICommand LogoutCommand => new Command(LogoutExit);
+
+        private async void LogoutExit()
+        {
+            bool result = await DisplayAlert("Hey!", "Are you sure you want to sign out?", "Yes", "No");
+            if (result == true)
             {
-                appShell.ImageUrl = "placeholder.png";
+                HelperAppSettings.Token = "";
+                HelperAppSettings.firstname = "";
+                HelperAppSettings.lastname = "";
+                HelperAppSettings.username = "";
+                HelperAppSettings.email = "";
+                HelperAppSettings.phonenumber = "";
+                HelperAppSettings.community_code = "";
+                HelperAppSettings.community_name = "";
+                HelperAppSettings.id = "";
+                HelperAppSettings.profile_img_url = "";
+                HelperAppSettings.priviledges = "";
+                HelperAppSettings.capName = "";
+                HelperAppSettings.Name = "";
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
             }
             else
             {
-                var imgUrl = Helper.ImageUrl + HelperAppSettings.profile_img_url;
-                appShell.ImageUrl = imgUrl;
-            }
-            InitializeComponent();
-
-            this.BindingContext = Helper.userprofile;
-            GetUserById();
-        }
-
-        public async void GetUserById()
-        {
-            HttpClient client = new HttpClient();
-            var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-
-            var result = await client.GetStringAsync(UserdetailEndpoint);
-            var MemberDetails = JsonConvert.DeserializeObject<MemberDetailsModel>(result);
-            //Users = new ObservableCollection<AddedUsers>(UsersList);
-            this.BindingContext = MemberDetails.member;
-            
-            //ProfileName.BindingContext = MemberDetails.member[0];
-            //FlyImage.BindingContext = MemberDetails.member[0];
-
-            if (MemberDetails.member[0].profile_img_url == null)
-            {
-                this.BindingContext = ImageSource.FromFile("ProfilePic.png");
+                return;
             }
 
         }
-
+        
         protected void onAppearing (object sender, EventArgs e)
         {
             base.OnAppearing();
-            GetUserById();
         }
 
         protected override bool OnBackButtonPressed()
@@ -66,23 +55,5 @@ namespace PeerCover
             return true;
         }
 
-        //    protected override bool OnBackButtonPressed()
-        //    {
-        //    Device.BeginInvokeOnMainThread(async () =>
-        //    {
-        //        var result = await this.DisplayAlert("Alert!", "Are you sure you want to exit this App?", "Yes", "No");
-        //        if (result==true)
-        //        {
-        //            base.OnBackButtonPressed();
-        //            Application.Current.Quit();
-        //        }
-        //    });
-        //    return true;
-        //    }
-
-        //public interface IAndroidMethods
-        //{
-        //    void Quit();
-        //}
     }
  }

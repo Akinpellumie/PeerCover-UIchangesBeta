@@ -10,11 +10,12 @@ using Xamarin.Forms.Xaml;
 namespace PeerCover.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SplashAnimation : ContentPage
+    public partial class PopUpChecks
     {
-        public SplashAnimation()
+        public PopUpChecks()
         {
             InitializeComponent();
+            this.CloseWhenBackgroundIsClicked = false;
         }
     }
 }

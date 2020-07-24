@@ -49,55 +49,72 @@ namespace PeerCover.Views
         }
 
         public async void LoadSingleSub(string subscription_id)
-
         {
-            var url = Helper.NewPlanUrl + subscription_id;
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(url);
-            var UsersList = JsonConvert.DeserializeObject<ActiveSubModel>(result);
-            renewSubStack.BindingContext = UsersList.subscription[0];
+            try
+            {
+                var url = Helper.NewPlanUrl + subscription_id;
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(url);
+                var UsersList = JsonConvert.DeserializeObject<ActiveSubModel>(result);
+                renewSubStack.BindingContext = UsersList.subscription[0];
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
 
         public void Input_unfocused(object sender, FocusEventArgs e)
         {
-            var pee = double.Parse(ReVLMInput.Text.Replace
+            try
+            {
+                var pee = double.Parse(ReVLMInput.Text.Replace
                     ("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol),
                     NumberStyles.Currency).ToString();
-            if (pee != null)
-            {
-
-                int TargetDefect;
-
-                if (int.TryParse(pee, out TargetDefect))
+                if (pee != null)
                 {
-                    double Per = ((double)TargetDefect) * 0.03;
-                    RePRMInput.Text = Per.ToString();
-                }
 
+                    int TargetDefect;
+
+                    if (int.TryParse(pee, out TargetDefect))
+                    {
+                        double Per = ((double)TargetDefect) * 0.03;
+                        RePRMInput.Text = Per.ToString();
+                    }
+
+                }
+                else if (ReVLMInput.Text == null)
+                {
+                    RePRMInput.Text = "";
+                }
+                if (string.IsNullOrEmpty(ReVLMInput.Text))
+                {
+                    RePRMInput.Text = "";
+                }
             }
-            else if (ReVLMInput.Text == null)
+            catch (Exception)
             {
-                RePRMInput.Text = "";
-            }
-            if (string.IsNullOrEmpty(ReVLMInput.Text))
-            {
-                RePRMInput.Text = "";
+                return;
             }
         }
         public void Input_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!string.IsNullOrEmpty(((Entry)sender).Text))
             {
-
-
-                var t = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
-                ((Entry)sender).Text = t;
-                ((Entry)sender).CursorPosition = t.Length - 3;
+                try
+                {
+                    var t = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
+                    ((Entry)sender).Text = t;
+                    ((Entry)sender).CursorPosition = t.Length - 3;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
-
 
         }
 
@@ -106,10 +123,16 @@ namespace PeerCover.Views
             if (!string.IsNullOrEmpty(((Entry)sender).Text))
             {
 
-
-                var ti = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
-                ((Entry)sender).Text = ti;
-                ((Entry)sender).CursorPosition = ti.Length - 3;
+                try
+                {
+                    var ti = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
+                    ((Entry)sender).Text = ti;
+                    ((Entry)sender).CursorPosition = ti.Length - 3;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
         }
 
@@ -120,8 +143,6 @@ namespace PeerCover.Views
             await CrossMedia.Current.Initialize();
             try
             {
-
-
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
                     await DisplayAlert("Warning", "Allow system.permission for this App", "Ok");

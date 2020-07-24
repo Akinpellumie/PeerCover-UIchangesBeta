@@ -35,6 +35,7 @@ namespace PeerCover.Models
     public class NotificationsModel
     {
         public List<NotifyModel> notifications { get; set; }
+        public string countUnread { get; set; }
     }
 
     public class UpdateNotification

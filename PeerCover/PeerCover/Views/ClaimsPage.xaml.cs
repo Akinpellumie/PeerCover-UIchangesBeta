@@ -29,31 +29,40 @@ namespace PeerCover.Views
                 await PopupNavigation.Instance.PushAsync(new PopUpNoInternet());
                 return;
             }
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
 
-
-            HttpClient client = new HttpClient();
-            var dashboardEndpoint = Helper.GetClaimByIdUrl + HelperAppSettings.username;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(dashboardEndpoint);
-            var ClaimsList = JsonConvert.DeserializeObject<ClaimsListModel>(result);
-
-            ClaimList.ItemsSource = ClaimsList.claims;
-            if (ClaimsList.claims.Count == 0)
+            try
             {
-                FrmCB.IsVisible = true;
-                stackList.IsVisible = false;
-            }
-            else
-            {
-                stackList.IsVisible = true;
-                FrmCB.IsVisible = false;
-            }
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
 
-            indicator.IsRunning = false;
-            indicator.IsVisible = false;
+                HttpClient client = new HttpClient();
+                var dashboardEndpoint = Helper.GetClaimByIdUrl + HelperAppSettings.username;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(dashboardEndpoint);
+                var ClaimsList = JsonConvert.DeserializeObject<ClaimsListModel>(result);
+
+                ClaimList.ItemsSource = ClaimsList.claims;
+                if (ClaimsList.claims.Count == 0)
+                {
+                    FrmCB.IsVisible = true;
+                    stackList.IsVisible = false;
+                }
+                else
+                {
+                    stackList.IsVisible = true;
+                    FrmCB.IsVisible = false;
+                }
+
+                indicator.IsRunning = false;
+                indicator.IsVisible = false;
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Oops!","Session expired. kindly login again.","Ok");
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                return;
+            }
         }
 
         async void ViewClaimTapped(object sender, ItemTappedEventArgs e)
@@ -61,6 +70,10 @@ namespace PeerCover.Views
             if (e.Item == null) return;
             var selectedUser = e.Item as Models.ClaimsModel;
             if (selectedUser.status.Contains("Reported"))
+            {
+                await Shell.Current.Navigation.PushAsync(new SingleClaim(selectedUser.id));
+            }
+            else if(selectedUser.status.Contains("Claims Paid"))
             {
                 await Shell.Current.Navigation.PushAsync(new SingleClaim(selectedUser.id));
             }

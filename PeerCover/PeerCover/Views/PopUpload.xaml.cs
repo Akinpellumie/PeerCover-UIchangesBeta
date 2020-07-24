@@ -30,6 +30,7 @@ namespace PeerCover.Views
         {
             subId = NumId;
             InitializeComponent();
+            this.CloseWhenBackgroundIsClicked = false;
         }
 
         public async void UploadImaTapped(object sender, EventArgs e)
@@ -135,70 +136,10 @@ namespace PeerCover.Views
             }
         }
 
-        //private async void NewSubClicked(object sender, EventArgs e)
-        //{
-        //    Indic.IsVisible = true;
-        //    try
-        //    {
-        //        TransactionModel update = new TransactionModel()
-        //        {
-        //            subscriptionId = subId,
-        //            vehicleImgUrl = newImgName
-        //        };
-
-        //        var client = new HttpClient();
-        //        client.DefaultRequestHeaders.Clear();
-        //        client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-
-        //        var json = JsonConvert.SerializeObject(update);
-        //        HttpContent result = new StringContent(json);
-        //        result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-        //        var response = await client.PostAsync(Helper.NewPlanUrl, result);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            await PopupNavigation.Instance.PopAsync(true);
-        //            await DisplayAlert("InHub", "New Plan Subscribed", "Ok");
-        //            await Shell.Current.Navigation.PushAsync(new Dashboard());
-        //            VMInput.Text = "";
-        //            RNInput.Text = "";
-        //            VCInput.Text = "";
-        //            YMInput.Text = "";
-        //            VLMInput.Text = "";
-        //            VINInput.Text = "";
-        //            PRMInput.Text = "";
-        //            ENInput.Text = "";
-        //            indicator.IsVisible = false;
-        //            indicator.IsRunning = false;
-
-        //        }
-        //        else
-        //        {
-        //            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-        //            {
-        //                await PopupNavigation.Instance.PopAsync(true);
-        //                await DisplayAlert("Whoops!", response.ReasonPhrase, "Ok");
-        //                indicator.IsVisible = false;
-        //                indicator.IsRunning = false;
-        //            }
-        //            else
-        //            {
-        //                await PopupNavigation.Instance.PopAsync(true);
-        //                indicator.IsRunning = false;
-        //                indicator.IsVisible = false;
-        //                await DisplayAlert("Whoops!", "Please try again later", "Ok");
-
-        //            }
-        //        }
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return;
-        //    }
-
-        //}
+        public async void Button_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PopAsync(true);
+        }
 
         async void Permission()
         {

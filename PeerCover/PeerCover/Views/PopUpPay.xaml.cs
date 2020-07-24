@@ -25,6 +25,7 @@ namespace PeerCover.Views
         {
             transId = txnId;
             InitializeComponent();
+            this.CloseWhenBackgroundIsClicked = false;
             PickMethod.BindingContext = new PaymentMethViewModel();
         }
 
@@ -63,7 +64,8 @@ namespace PeerCover.Views
 
                 if (response.IsSuccessStatusCode)
                 {
-                    await DisplayAlert("Success", "Your transaction details has been verified successfully!!!", "Ok");
+                    await DisplayAlert("Success", "Your transaction will be reviewed and confirmed accordingly!!!", "Ok");
+                    this.CloseWhenBackgroundIsClicked = true;
                     await PopupNavigation.Instance.PopAsync(true);
                 }
                 else
@@ -71,14 +73,16 @@ namespace PeerCover.Views
                     if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
                         await DisplayAlert("Alert", "Whoopss! Try Again Later", "Ok");
-                        await PopupNavigation.Instance.PopAsync(true);
+                        this.CloseWhenBackgroundIsClicked = false;
+                        BtnClose.IsVisible = true;
                         indicator.IsVisible = false;
                         indicator.IsRunning = false;
                     }
                     else
                     {
                         await DisplayAlert("Alert", "Please try again later", "Ok");
-                        await PopupNavigation.Instance.PopAsync(true);
+                        this.CloseWhenBackgroundIsClicked = false;
+                        BtnClose.IsVisible = true;
                         indicator.IsVisible = false;
                         indicator.IsRunning = false;
                     }
@@ -89,6 +93,11 @@ namespace PeerCover.Views
             {
                 return;
             }
+        }
+
+        public async void Button_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PopAsync(true);
         }
     }
 }

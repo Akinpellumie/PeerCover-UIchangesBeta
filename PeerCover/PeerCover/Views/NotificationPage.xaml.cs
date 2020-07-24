@@ -44,75 +44,72 @@ namespace PeerCover.Views
         }
 
         public async void GetNotifications()
-
         {
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
-
-
-            HttpClient client = new HttpClient();
-            var dashboardEndpoint = Helper.GetNotificationsUrl + HelperAppSettings.username + Helper.msgUnreadFilter;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(dashboardEndpoint);
-            var NotsList = JsonConvert.DeserializeObject<NotificationsModel>(result);
-            MsgList.ItemsSource = NotsList.notifications;
-
-            if (result.Contains("id"))
+            try
             {
-                Frm2.IsVisible = true;
-                Frm2B.IsVisible = false;
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
+
+                HttpClient client = new HttpClient();
+                var dashboardEndpoint = Helper.GetNotificationsUrl + HelperAppSettings.username + Helper.msgUnreadFilter;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(dashboardEndpoint);
+                var NotsList = JsonConvert.DeserializeObject<NotificationsModel>(result);
+                MsgList.ItemsSource = NotsList.notifications;
+
+                if (result.Contains("id"))
+                {
+                    Frm2.IsVisible = true;
+                    Frm2B.IsVisible = false;
+                }
+                else
+                {
+                    Frm2.IsVisible = false;
+                    Frm2B.IsVisible = true;
+                }
+
+                indicator.IsRunning = false;
+                indicator.IsVisible = false;
             }
-            else
+            catch(Exception)
             {
-                Frm2.IsVisible = false;
-                Frm2B.IsVisible = true;
+                return;
             }
-
-            //List<NotificationsModel> messages = new List<NotificationsModel>();
-
-            //foreach (NotificationsModel message in messages)
-            //{
-
-            //}
-
-
-            //if (NotsList.notifications.)
-            //{
-
-            //}
-
-            indicator.IsRunning = false;
-            indicator.IsVisible = false;
         }
 
         public async void GetUnreadNotifications()
-
         {
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
-
-
-            HttpClient client = new HttpClient();
-            var dashboardEndpoint = Helper.GetNotificationsUrl + HelperAppSettings.username + Helper.msgReadFilter;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(dashboardEndpoint);
-            var NotsList = JsonConvert.DeserializeObject<NotificationsModel>(result);
-
-            NewMsgList.ItemsSource = NotsList.notifications;
-            if (result.Contains("id"))
+            try
             {
-                Frm1.IsVisible = true;
-                Frm1B.IsVisible = false;
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
+
+                HttpClient client = new HttpClient();
+                var dashboardEndpoint = Helper.GetNotificationsUrl + HelperAppSettings.username + Helper.msgReadFilter;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(dashboardEndpoint);
+                var NotsList = JsonConvert.DeserializeObject<NotificationsModel>(result);
+
+                NewMsgList.ItemsSource = NotsList.notifications;
+                if (result.Contains("id"))
+                {
+                    Frm1.IsVisible = true;
+                    Frm1B.IsVisible = false;
+                }
+                else
+                {
+                    Frm1.IsVisible = false;
+                    Frm1B.IsVisible = true;
+                }
+                indicator.IsRunning = false;
+                indicator.IsVisible = false;
             }
-            else
+            catch (Exception)
             {
-                Frm1.IsVisible = false;
-                Frm1B.IsVisible = true;
+                return;
             }
-            indicator.IsRunning = false;
-            indicator.IsVisible = false;
         }
 
         public void NewBtn_Clicked(object sender, EventArgs e)

@@ -92,6 +92,16 @@
                        
                     </StackLayout>
 
+                    <StackLayout Grid.Row="3" Margin="20, 15" x:Name="PayStc2"  IsVisible="False">
+                        <Label Text="This Vehicle Claim is under review!!!" HorizontalOptions="Center" TextColor="OrangeRed" FontSize="Subtitle" 
+                              FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="3" Margin="20, 15" x:Name="PayStc3"  IsVisible="False">
+                        <Label Text="Your subscription payment is under review!!!" HorizontalOptions="Center" TextColor="#FA9917" FontSize="Subtitle" 
+                              FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                    </StackLayout>
+
                     <StackLayout Grid.Row="3" Margin="20, 15" x:Name="PayStck" IsVisible="False" HorizontalOptions="Fill">
                         <Button VerticalOptions="EndAndExpand" FontSize="15" CornerRadius="50"
                         HeightRequest="45" HorizontalOptions="Fill" TextColor="White" 

@@ -1,20 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using PeerCover.Views;
 
 namespace PeerCover
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AppShellUser : Shell
     {
         public AppShellUser()
         {
             InitializeComponent();
+            myBtn.Clicked += (sender, e) => {
+                LogoutExit();
+            };
+           
+        }
+
+
+        private async void LogoutExit()
+        {
+            bool result = await DisplayAlert("Hey!", "Are you sure you want to sign out?", "Yes", "No");
+            if (result == true)
+            {
+                HelperAppSettings.Token = "";
+                HelperAppSettings.firstname = "";
+                HelperAppSettings.lastname = "";
+                HelperAppSettings.username = "";
+                HelperAppSettings.email = "";
+                HelperAppSettings.phonenumber = "";
+                HelperAppSettings.community_code = "";
+                HelperAppSettings.community_name = "";
+                HelperAppSettings.id = "";
+                HelperAppSettings.profile_img_url = "";
+                HelperAppSettings.priviledges = "";
+                HelperAppSettings.capName = "";
+                HelperAppSettings.Name = "";
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+            }
+            else
+            {
+                return;
+            }
+
+        }
+        
+        protected void onAppearing(object sender, EventArgs e)
+        {
+            base.OnAppearing();
         }
 
         protected override bool OnBackButtonPressed()
@@ -22,5 +53,6 @@ namespace PeerCover
             base.OnBackButtonPressed();
             return true;
         }
+
     }
 }

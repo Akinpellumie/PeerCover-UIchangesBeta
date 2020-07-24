@@ -18,7 +18,6 @@ namespace PeerCover.Views
         }
         public void PassValidClicked(object sender, EventArgs e)
         {
-            ContentPage fpm = new LoginPage();
             HelperAppSettings.Token = "";
             HelperAppSettings.firstname = "";
             HelperAppSettings.lastname = "";
@@ -32,7 +31,7 @@ namespace PeerCover.Views
             HelperAppSettings.priviledges = "";
             HelperAppSettings.capName = "";
             HelperAppSettings.Name = "";
-            Application.Current.MainPage = fpm;
+            Application.Current.MainPage = new NavigationPage (new LoginPage());
         }
     }
 }

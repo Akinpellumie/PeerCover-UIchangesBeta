@@ -10,6 +10,7 @@ using PeerCover.ViewModels;
 using Rg.Plugins.Popup.Services;
 using PeerCover.Utils;
 using Xamarin.Essentials;
+using System.Linq.Expressions;
 
 namespace PeerCover.Views
 {
@@ -109,7 +110,7 @@ namespace PeerCover.Views
             //Loader.IsVisible = true;
             try
             {
-
+                await PopupNavigation.Instance.PushAsync(new PopUpChecks());
                 var url = Helper.UsernameAvailability + USNInput.Text;
                 HttpClient client = new HttpClient();
                 var result = await client.GetStringAsync(url);
@@ -117,13 +118,16 @@ namespace PeerCover.Views
                 if (result.Contains("Username is available"))
                 {
                     ///Loader.IsVisible = false;
+                    await PopupNavigation.Instance.PopAsync(true);
                     await DisplayAlert("Success", "Username is Available", "Ok");
                 }
                 else if (result.Contains("Username is not available"))
                 {
                     //Loader.IsVisible = false;
+                    await PopupNavigation.Instance.PopAsync(true);
                     await DisplayAlert("Attention", "Username already Exist", "Ok");
                     LblUser.TextColor = Color.Red;
+                    USNFrame.BorderColor = Color.Red;
                     LblUsn.Text = "Username already exist. Try another one*";
                     USNInput.TextColor = Color.Red;
                     //USNInput = Color.Red;
@@ -151,6 +155,26 @@ namespace PeerCover.Views
         {
             Application.Current.MainPage = new NavigationPage(new LoginPage());
         }
+
+        public void CommCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+
+                if (e.NewTextValue.Length >= 1)
+                {
+                    CCFrame.BorderColor = Color.Accent;
+                    CCInput.TextColor = Color.Default;
+                 
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+
+        }
+
         public void Input2_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -158,7 +182,7 @@ namespace PeerCover.Views
 
                 if (e.NewTextValue.Length >= 1)
                 {
-                    //UsnFrm.BorderColor = Color.Accent;
+                    USNFrame.BorderColor = Color.Accent;
                     USNInput.TextColor = Color.Default;
                     LblUser.TextColor = Color.Default;
                     LblUsn.Text = "";
@@ -233,17 +257,45 @@ namespace PeerCover.Views
             }
         }
 
-        public void CommCode_Unfocused(object sender, FocusEventArgs e)
+        public async void CommCode_Unfocused(object sender, FocusEventArgs e)
         {
-            if (string.IsNullOrEmpty(EAInput.Text) || string.IsNullOrEmpty(CCInput.Text) || string.IsNullOrEmpty(PWDInput.Text) || TermsCheck.IsChecked == false)
+            try
             {
-                BtnClick1.IsVisible = true;
-                BtnClick2.IsVisible = false;
+                await PopupNavigation.Instance.PushAsync(new PoppCheckComm());
+                var url = Helper.GetCommAvailUrl + CCInput.Text;
+                HttpClient client = new HttpClient();
+                var result = await client.GetStringAsync(url);
+                //var UsersList = JsonConvert.DeserializeObject<MembersListModel>(result);
+                if (result.Contains("Community code is available"))
+                {
+                    ///Loader.IsVisible = false;
+                    await PopupNavigation.Instance.PopAsync(true);
+                    await DisplayAlert("Success", "Community Code is Available", "Ok");
+                }
+                else if (result.Contains("Community code is not available"))
+                {
+                    //Loader.IsVisible = false;
+                    await PopupNavigation.Instance.PopAsync(true);
+                    await DisplayAlert("Attention", "Community code isn't available. Please check and try again.", "Ok");
+                    CCFrame.BorderColor = Color.Red;
+                    CCInput.TextColor = Color.Red;
+
+                    if (string.IsNullOrEmpty(EAInput.Text) || string.IsNullOrEmpty(CCInput.Text) || string.IsNullOrEmpty(PWDInput.Text) || TermsCheck.IsChecked == false)
+                    {
+                        BtnClick1.IsVisible = true;
+                        BtnClick2.IsVisible = false;
+                    }
+                    else
+                    {
+                        BtnClick2.IsVisible = true;
+                        BtnClick1.IsVisible = false;
+                    }
+                    //USNInput = Color.Red;
+                }
             }
-            else
+            catch (Exception)
             {
-                BtnClick2.IsVisible = true;
-                BtnClick1.IsVisible = false;
+                return;
             }
         }
 
@@ -318,6 +370,16 @@ namespace PeerCover.Views
         {
             FirstStack.IsVisible = false;
             SecondStack.IsVisible = true;
+        }
+
+        public async void Button_Clicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Holla!", "Kindly fill all inputs to sign up, and make sure your password contains at least one number, one special character, and one alphabet.","Ok");
+        }
+
+        public async void Button_Clicked_1(object sender, EventArgs e)
+        {
+            await DisplayAlert("Holla!", "Kindly fill all inputs to continue.", "Ok");
         }
     }
 }

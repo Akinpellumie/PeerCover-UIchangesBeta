@@ -127,6 +127,11 @@ namespace PeerCover.Views
                     await DisplayAlert("Oops!","You've already paid for this subscription.","Ok");
                     return;
                 }
+                if (stats.Contains("Awaiting Verification"))
+                {
+                    await DisplayAlert("Oops!", "This subscription payment is under review. Kindly await verification.", "Ok");
+                    return;
+                }
 
                 spin.IsVisible = true;
                 if (!string.IsNullOrEmpty(NumId))
@@ -233,11 +238,18 @@ CallAstraPay()
         }
         public async void CopyClicked(object sender, EventArgs e)
         {
-            await Share.RequestAsync(new ShareTextRequest
+            try
             {
-                Text = "0125463876",
-                Title = "Copy!"
-            });
+                await Share.RequestAsync(new ShareTextRequest
+                {
+                    Text = "0125463876",
+                    Title = "Copy!"
+                });
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         public async void PayWithCardNew_Clicked(object sender, EventArgs e)
@@ -266,7 +278,13 @@ CallAstraPay()
                     return;
                 }
 
-                if (SinSubPay.IsVisible == true && pre != null)
+                if (stats.Contains("Awaiting Verification"))
+                {
+                    await DisplayAlert("Oops!", "This subscription payment is under review. Kindly await verification.", "Ok");
+                    return;
+                }
+
+                if (SinSubPay.IsVisible == true && pre.ToString() !=null)
                 {
                     var prem = pre.ToString();
                   
@@ -275,7 +293,7 @@ CallAstraPay()
                     bool result = await DisplayAlert("Alert", "A total of" + " " + "NGN " + Sum + " will be deducted from your account." , "Continue", "Cancel");
                     if (result == true)
                     {
-                        CallPayWithCard();
+                       await CallPayWithCard();
                     }
                     else
                     {
@@ -363,6 +381,12 @@ CallAstraPay()
             if (stats.StartsWith("Pa"))
             {
                 await DisplayAlert("Oops!", "You've already paid for this subscription.", "Ok");
+                return;
+            }
+
+            if (stats.Contains("Awaiting Verification"))
+            {
+                await DisplayAlert("Oops!", "This subscription payment is under review. Kindly await verification.", "Ok");
                 return;
             }
 

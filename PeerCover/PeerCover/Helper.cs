@@ -7,6 +7,7 @@
             get
             {
                 return "https://cover-my-car.herokuapp.com";
+                //return "https://www.proguard.peercover.com.ng";
             }
         }
         //public static string domainurl
@@ -79,8 +80,10 @@
 
         public static string GetClaimsUrl { get { return Helper.domainurl + "/claims/"; } }
         public static string getCommClaimsUrl { get { return Helper.domainurl + "/claims?communityCode="; } }
+        public static string GetOtherCommClaim { get { return Helper.domainurl + "/claims/others/otherclaims?policyHolder="; } } 
         public static string GetClaimByIdUrl { get { return Helper.domainurl + "/claims?policyHolder="; } }
         public static string GetPlansUrl { get { return Helper.domainurl + "/plans/"; } }
+        public static string GetCommAvailUrl { get { return Helper.domainurl + "/community/communityExists/"; } }
         public static string GetNotificationsUrl { get { return Helper.domainurl + "/notifications?username="; } }
         public static string GetNotificationsById { get { return Helper.domainurl + "/notifications/"; } }
         public static string SearchUsersurl { get { return Helper.domainurl + "/members?name="; } }
@@ -89,6 +92,7 @@
         public static string UpdateRequestUrl { get { return Helper.domainurl + "/requests/"; } }
         public static string UpdateRolesUrl { get { return Helper.domainurl + "/members/roles/"; } }
         public static string getActiveSubUrl { get { return Helper.domainurl + "/subscriptions?username="; } }
+        public static string GetSingleClaimUrl { get { return Helper.domainurl + "/claims/"; } }
         public static string GetRequestsUrl { get { return Helper.domainurl + "/requests?communityCode="; } }
         public static string UploadUrl { get { return Helper.domainurl + "/files/"; } }
         public static string RenewSubUrl { get { return Helper.domainurl + "/subscriptions/renew/"; } }

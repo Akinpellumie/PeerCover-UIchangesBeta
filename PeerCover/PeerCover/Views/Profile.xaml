@@ -12,10 +12,10 @@
              Title="Profile">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="+"
+        <!--<ToolbarItem Text="+"
                      Icon="notifyMe.png"
                      Priority="0"
-                     Clicked="NotifyIconClicked"/>
+                     Clicked="NotifyIconClicked"/>-->
         <ToolbarItem Order="Secondary"
                      Text="Change Password" Clicked="changePassClicked"
                      Priority="1"/>
@@ -27,7 +27,7 @@
                      Priority="2"/>
     </ContentPage.ToolbarItems>
     
-    <pv:PancakeView HasShadow="True" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundGradientAngle="180">
+    <pv:PancakeView HasShadow="True" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <pv:PancakeView.BackgroundGradientStops>
             <pv:GradientStopCollection>
                 <pv:GradientStop Color="#E7EDF8" Offset="0"/>
@@ -58,7 +58,7 @@
                             <BoxView BackgroundColor="White" Opacity="0.7" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
                             <pv:PancakeView Grid.Column="0" HasShadow="True" HeightRequest="76" WidthRequest="76" CornerRadius="38" Margin="20,0,20,0"
                                 HorizontalOptions="Start" VerticalOptions="Center" BorderIsDashed="True" BorderThickness="1" 
-                                                           BorderColor="Accent" BackgroundGradientAngle="180">
+                                                           BorderColor="Accent">
                                 <pv:PancakeView.BackgroundGradientStops>
                                     <pv:GradientStopCollection>
                                         <pv:GradientStop Color="White" Offset="0"/>

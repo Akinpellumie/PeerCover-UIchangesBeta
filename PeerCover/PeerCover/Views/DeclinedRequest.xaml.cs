@@ -36,11 +36,11 @@ namespace PeerCover.Views
                 return;
             }
 
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
-
             try
             {
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
+
                 HttpClient client = new HttpClient();
                 var dashboardEndpoint = Helper.GetRequestsUrl + HelperAppSettings.community_code + Helper.getRequestFilter + "declined";
                 client.DefaultRequestHeaders.Clear();

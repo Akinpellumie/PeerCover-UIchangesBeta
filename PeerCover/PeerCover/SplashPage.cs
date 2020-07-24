@@ -35,7 +35,7 @@ namespace PeerCover
             base.OnAppearing();
 
             splashImage.Opacity = 0;
-            await splashImage.FadeTo(1, 4000);
+            await splashImage.FadeTo(1, 2000);
             Application.Current.MainPage = new NavigationPage(new LoginPage());
         }
     }

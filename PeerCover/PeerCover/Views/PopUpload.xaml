@@ -27,6 +27,11 @@
                  HorizontalOptions="Fill"
                  VerticalOptions="Center">
 
+        <StackLayout HorizontalOptions="End" Margin="5" IsVisible="True" x:Name="BtnClose">
+            <Button Text="Close X" FontSize="Small" HeightRequest="30" TextColor="Red" BackgroundColor="Transparent"
+                    BorderColor="Red" BorderWidth="2" CornerRadius="45" Clicked="Button_Clicked"/>
+        </StackLayout>
+        
         <Label Text="Image Session Expired, Kindly Re-upload your vehicle image to proceed!" FontSize="13"
                TextColor="{StaticResource TxtColor}" HorizontalOptions="Center" Margin="5"/>
 

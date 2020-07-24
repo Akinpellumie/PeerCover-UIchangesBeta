@@ -45,7 +45,7 @@ BackgroundColor="White" >
                                 </StackLayout>
                             </StackLayout>
                             <StackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
-                                <Label  Text="{Binding status}" TextColor="{Binding Path=Status_color}" FontSize="12"/>
+                                <Label  Text="{Binding newStatus}" TextColor="{Binding Path=Status_color}" FontSize="12"/>
                             </StackLayout>
                         </Grid>
                     </Frame>

@@ -6,6 +6,7 @@ using Xamarin.Essentials;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System;
 
 namespace PeerCover.Views
 {
@@ -31,15 +32,30 @@ namespace PeerCover.Views
             }
         }
         public async void LoadSingleClaim(string id)
-
         {
-            var url = Helper.GetClaimsUrl + id;
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(url);
-            var UsersList = JsonConvert.DeserializeObject<SingleClaimListModel>(result);
-            SingleClaimDetails.BindingContext = UsersList.claim[0];
+            try
+            {
+                var url = Helper.GetClaimsUrl + id;
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(url);
+                var UsersList = JsonConvert.DeserializeObject<SingleClaimListModel>(result);
+                SingleClaimDetails.BindingContext = UsersList.claim[0];
+                var stats = UsersList.claim[0].status;
+                if (stats.Contains("Reported"))
+                {
+                    VsStats.IsVisible = true;
+                }
+                else
+                {
+                    VsStats.IsVisible = false;
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
             //SnName.Text = UsersList.claim[0].firstname + UsersList.claim[0].lastname;
         }
 

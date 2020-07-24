@@ -42,37 +42,45 @@ namespace PeerCover.Views
         }
 
         public async void GetMembers()
-
         {
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
+
+            try
+            {
+
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
+
+                HttpClient client = new HttpClient();
+                var dashboardEndpoint = Helper.getCommunityMembers + HelperAppSettings.community_code + "&isActive=True";
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(dashboardEndpoint);
+                var MemList = JsonConvert.DeserializeObject<MembersListModel>(result);
+                var sorted = from member in MemList.members
+                             orderby member.firstname
+                             group member by member.NameSort into memberGroup
+                             select new Grouping<string, MembersModel>(memberGroup.Key, memberGroup);
+                var groupedMembers = new ObservableCollection<Grouping<string, MembersModel>>(sorted);
 
 
-            HttpClient client = new HttpClient();
-            var dashboardEndpoint = Helper.getCommunityMembers + HelperAppSettings.community_code + "&isActive=True";
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(dashboardEndpoint);
-            var MemList = JsonConvert.DeserializeObject<MembersListModel>(result);
-            var sorted = from member in MemList.members
-                         orderby member.firstname
-                         group member by member.NameSort into memberGroup
-                         select new Grouping<string, MembersModel>(memberGroup.Key, memberGroup);
-            var groupedMembers = new ObservableCollection<Grouping<string, MembersModel>>(sorted);
+                stack2.IsVisible = false;
+                stack1.IsVisible = true;
+                MemberList.ItemsSource = groupedMembers;
+                MemberList.IsGroupingEnabled = true;
+                MemberList.GroupDisplayBinding = new Binding("Key");
+                MemberList.GroupShortNameBinding = new Binding("Key");
 
+                indicator.IsRunning = false;
+                indicator.IsVisible = false;
 
-            stack2.IsVisible = false;
-            stack1.IsVisible = true;
-            MemberList.ItemsSource = groupedMembers;
-            MemberList.IsGroupingEnabled = true;
-            MemberList.GroupDisplayBinding = new Binding("Key");
-            MemberList.GroupShortNameBinding = new Binding("Key");
+                //grouped = new ObservableCollection<GroupedMembersModel>();
+                //var veggieGroup = new GroupedMembersModel() { LongName = , ShortName = "v" };
 
-            //grouped = new ObservableCollection<GroupedMembersModel>();
-            //var veggieGroup = new GroupedMembersModel() { LongName = , ShortName = "v" };
-
-            indicator.IsRunning = false;
-            indicator.IsVisible = false;
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         public async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)

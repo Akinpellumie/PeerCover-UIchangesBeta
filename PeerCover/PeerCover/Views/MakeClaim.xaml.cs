@@ -109,7 +109,7 @@ namespace PeerCover.Views
                     if (file != null)
                     {
                         LblImg1.Text = "Please wait while image is uploading....";
-                        LblImg1.FadeTo(1, 200);
+                        await LblImg1.FadeTo(1, 200);
 
                     }
 
@@ -195,7 +195,7 @@ namespace PeerCover.Views
                     if (file != null)
                     {
                         LblImg2.Text = "Please wait while image is uploading....";
-                        LblImg2.FadeTo(1, 200);
+                        await LblImg2.FadeTo(1, 200);
 
                     }
 
@@ -285,7 +285,7 @@ namespace PeerCover.Views
                     if (file != null)
                     {
                         LblImg3.Text = "Please wait while image is uploading....";
-                        LblImg3.FadeTo(1, 200);
+                        await LblImg3.FadeTo(1, 200);
                     }
 
                     ImageSource.FromStream(() => file.GetStream());
@@ -374,7 +374,7 @@ namespace PeerCover.Views
                     if (file != null)
                     {
                         LblDoc.Text = "Please wait while document is uploading....";
-                        LblDoc.FadeTo(1, 200);
+                       await LblDoc.FadeTo(1, 200);
                     }
 
                     ImageSource.FromStream(() => file.GetStream());

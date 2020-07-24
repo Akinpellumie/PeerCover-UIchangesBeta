@@ -22,6 +22,8 @@ namespace PeerCover.Droid
         internal static readonly int NOTIFICATION_ID = 100;
 
         TextView msgText;
+
+        [Obsolete]
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -94,6 +96,7 @@ namespace PeerCover.Droid
             notificationManager.CreateNotificationChannel(channel);
         }
 
+        [Obsolete]
         public string GetDevId()
         {
             id = Android.OS.Build.Serial;

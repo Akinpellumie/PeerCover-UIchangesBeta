@@ -162,6 +162,19 @@ namespace PeerCover.Views
                                 await PopupNavigation.Instance.PopAsync(true);
 
                             }
+
+                            else
+                            {
+                                await PopupNavigation.Instance.PopAsync(true);
+                                await DisplayAlert("Oops!","Invalid username or password","Ok");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            await PopupNavigation.Instance.PopAsync(true);
+                            await DisplayAlert("Login Canceled!", "You can only login to a device at once. Kindly click login again to confirm login to this device.", "Ok");
+                            return;
                         }
                     }
 
@@ -172,6 +185,7 @@ namespace PeerCover.Views
                         {
                             await PopupNavigation.Instance.PopAsync(true);
                             await DisplayAlert("Oops!", "Check your connection and try Again", "Ok");
+                            return;
 
                         }
                         else if (result.IsSuccessStatusCode == false)
@@ -245,7 +259,7 @@ namespace PeerCover.Views
                             //indicator.IsVisible = false;
                             await PopupNavigation.Instance.PopAsync(true);
                             await DisplayAlert("Login Failed", "Username or Password is Incorrect, Please Try Again!", "Ok");
-
+                            return;
                         }
 
                     }

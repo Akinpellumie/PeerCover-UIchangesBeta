@@ -39,34 +39,43 @@ namespace PeerCover.Views
 
 
         public async void GetOtherClaims()
-
         {
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
-
-
-            HttpClient client = new HttpClient();
-            var dashboardEndpoint = Helper.getCommClaimsUrl + HelperAppSettings.community_code;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(dashboardEndpoint);
-            var ClaimsList = JsonConvert.DeserializeObject<ClaimsListModel>(result);
-
-            OtherClaimsList.ItemsSource = ClaimsList.claims;
-
-             if (ClaimsList.claims.Count == 0)
+            
+            try
             {
-                FrmSB.IsVisible = true;
-                stcList.IsVisible = false;
-            }
-            else
-            {
-                stcList.IsVisible = true;
-                FrmSB.IsVisible = false;
-            }
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
 
-            indicator.IsRunning = false;
-            indicator.IsVisible = false;
+                HttpClient client = new HttpClient();
+                var dashboardEndpoint = Helper.GetOtherCommClaim + HelperAppSettings.username + "&communityCode=" + HelperAppSettings.community_code;
+                var otherClaimsEndpoint = dashboardEndpoint;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(otherClaimsEndpoint);
+                var ClaimsList = JsonConvert.DeserializeObject<ClaimsListModel>(result);
+
+                OtherClaimsList.ItemsSource = ClaimsList.claims;
+
+                 if (ClaimsList.claims.Count == 0)
+                {
+                    FrmSB.IsVisible = true;
+                    stcList.IsVisible = false;
+                }
+                else
+                {
+                    stcList.IsVisible = true;
+                    FrmSB.IsVisible = false;
+                }
+
+                indicator.IsRunning = false;
+                indicator.IsVisible = false;
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Oops!", "Session expired. kindly login again.", "Ok");
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                return;
+            }
         }
 
         async void ViewClaimTapped(object sender, ItemTappedEventArgs e)

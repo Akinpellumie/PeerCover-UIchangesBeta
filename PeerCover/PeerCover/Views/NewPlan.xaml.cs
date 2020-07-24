@@ -37,45 +37,56 @@ namespace PeerCover.Views
 
         public void Input_unfocused(object sender, FocusEventArgs e)
         {
-            var pee = double.Parse(VLMInput.Text.Replace
+            try
+            {
+                var pee = double.Parse(VLMInput.Text.Replace
                     ("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol),
                     NumberStyles.Currency).ToString();
-            if (pee != null)
-            {
-
-                int TargetDefect;
-
-                if (int.TryParse(pee, out TargetDefect))
+                if (pee != null)
                 {
-                    double Per = ((double)TargetDefect) * 0.03;
-                    PRMInput.Text = Per.ToString();
-                }
 
-                //var P = e.NewTextValue;
-                //Double.TryParse("4.0", CultureInfo.InvariantCulture);
-                //double x = Int32.Parse(P);
-                //PRMInput.Text = x * 0.3;
+                    int TargetDefect;
+
+                    if (int.TryParse(pee, out TargetDefect))
+                    {
+                        double Per = ((double)TargetDefect) * 0.03;
+                        PRMInput.Text = Per.ToString();
+                    }
+
+                    //var P = e.NewTextValue;
+                    //Double.TryParse("4.0", CultureInfo.InvariantCulture);
+                    //double x = Int32.Parse(P);
+                    //PRMInput.Text = x * 0.3;
+                }
+                else if (VLMInput.Text == null)
+                {
+                    PRMInput.Text = "";
+                }
+                if (string.IsNullOrEmpty(VLMInput.Text))
+                {
+                    PRMInput.Text = "";
+                }
             }
-            else if (VLMInput.Text == null)
+            catch (Exception)
             {
-                PRMInput.Text = "";
-            }
-            if (string.IsNullOrEmpty(VLMInput.Text))
-            {
-                PRMInput.Text = "";
+                return;
             }
         }
         public void Input_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!string.IsNullOrEmpty(((Entry)sender).Text))
             {
-
-
-                var t = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
-                ((Entry)sender).Text = t;
-                ((Entry)sender).CursorPosition = t.Length - 3;
+                try
+                {
+                    var t = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
+                    ((Entry)sender).Text = t;
+                    ((Entry)sender).CursorPosition = t.Length - 3;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
-
 
         }
 
@@ -83,11 +94,16 @@ namespace PeerCover.Views
         {
             if (!string.IsNullOrEmpty(((Entry)sender).Text))
             {
-
-
-                var ti = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
-                ((Entry)sender).Text = ti;
-                ((Entry)sender).CursorPosition = ti.Length - 3;
+                try
+                {
+                    var ti = double.Parse(((Entry)sender).Text.Replace("₦", CultureInfo.CurrentUICulture.NumberFormat.CurrencySymbol), NumberStyles.Currency).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
+                    ((Entry)sender).Text = ti;
+                    ((Entry)sender).CursorPosition = ti.Length - 3;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
         }
 
@@ -98,8 +114,6 @@ namespace PeerCover.Views
             await CrossMedia.Current.Initialize();
             try
             {
-
-
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
                     await DisplayAlert("Warning", "Allow system.permission for this App", "Ok");
@@ -124,7 +138,7 @@ namespace PeerCover.Views
 
                     if (file != null)
                     {
-                        lbl1.Text = file.AlbumPath;
+                        lbl1.Text = "Please wait while image is uploading...";
 
                     }
 
@@ -147,15 +161,20 @@ namespace PeerCover.Views
                     {
 
                         ImageName = responseeee;
+                        lbl1.Text = "Image uploaded successfully...";
 
                     }
                     else if (k.StatusCode == 401)
                     {
-                        await DisplayAlert("InHub", k.Message, "ok");
+                        await DisplayAlert("Oops!", "Network error, please try again later.", "ok");
+                        lbl1.Text = "Image upload unsuccessfully...";
+                        lbl1.TextColor = Color.Red;
                     }
                     else
                     {
-                        await DisplayAlert("InHub", k.Message, "ok");
+                        await DisplayAlert("Oops!", "Unable to connect to the internet, please try again later", "ok");
+                        lbl1.Text = "Image upload unsuccessfully...";
+                        lbl1.TextColor = Color.Red;
                     }
                 }
             }
@@ -199,7 +218,7 @@ namespace PeerCover.Views
 
                     if (file != null)
                     {
-                        lbl2.Text = file.AlbumPath;
+                        lbl2.Text = "Please wait while image is uploading...";
 
                     }
 
@@ -222,15 +241,19 @@ namespace PeerCover.Views
                     {
 
                         utilityBillName = responseeee;
-
+                        lbl2.Text = "Image uploaded successfully...";
                     }
                     else if (k.StatusCode == 401)
                     {
-                        await DisplayAlert("InHub", k.Message, "ok");
+                        await DisplayAlert("Oops!", "Network error, please try again later.", "ok");
+                        lbl2.Text = "Image upload unsuccessfully...";
+                        lbl2.TextColor = Color.Red;
                     }
                     else
                     {
-                        await DisplayAlert("InHub", k.Message, "ok");
+                        await DisplayAlert("Oops!", "Unable to connect to the internet, please try again later", "ok");
+                        lbl2.Text = "Image upload unsuccessfully...";
+                        lbl2.TextColor = Color.Red;
                     }
                 }
             }
@@ -274,7 +297,7 @@ namespace PeerCover.Views
 
                     if (file != null)
                     {
-                        lbl.Text = file.AlbumPath;
+                        lbl.Text = "Please wait while image is uploading...";
 
                     }
 
@@ -297,15 +320,20 @@ namespace PeerCover.Views
                     {
 
                         licenseName = responseeee;
+                        lbl.Text = "Image uploaded successfully....";
 
                     }
                     else if (k.StatusCode == 401)
                     {
-                        await DisplayAlert("InHub", k.Message, "ok");
+                        await DisplayAlert("Oops!", "Network error, please try again later.", "ok");
+                        lbl.Text = "Image upload unsuccessfully...";
+                        lbl.TextColor = Color.Red;
                     }
                     else
                     {
-                        await DisplayAlert("InHub", k.Message, "ok");
+                        await DisplayAlert("Oops!", "Unable to connect to the internet, please try again later", "ok");
+                        lbl.Text = "Image upload unsuccessfully...";
+                        lbl.TextColor = Color.Red;
                     }
                 }
             }
@@ -318,11 +346,17 @@ namespace PeerCover.Views
 
         public void amount_textChanged(object sender, TextChangedEventArgs e)
         {
-            if (e.NewTextValue.Length >= 1)
+            try
             {
-                Math.Round(Convert.ToDouble(e), 2).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
+                if (e.NewTextValue.Length >= 1)
+                {
+                    Math.Round(Convert.ToDouble(e), 2).ToString("C", CultureInfo.GetCultureInfo("en-us")).Replace("$", "₦");
+                }
             }
-
+            catch (Exception)
+            {
+                return;
+            }
         }
 
 

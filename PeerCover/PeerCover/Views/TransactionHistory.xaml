@@ -44,8 +44,9 @@
                                                     </StackLayout>
 
                                                     <StackLayout Grid.Column="1" VerticalOptions="Center" Orientation="Vertical">
-                                                        <Label Text="{Binding DapDate}" TextColor="{StaticResource TxtColor}" FontSize="15" FontAttributes="Bold"/>
-                                                        <Label Text="{Binding payment_status}" TextColor="{Binding Path=PayStatusColor}" FontSize="Body" FontAttributes="Bold"/>
+                                                            <Label Text="{Binding payment_method}" TextColor="{StaticResource TxtColor}" FontSize="Small" FontAttributes="Bold"/>
+                                                            <Label Text="{Binding DapDate}" TextColor="{StaticResource TxtColor}" FontSize="15" FontAttributes="Bold"/>
+                                                            <Label Text="{Binding payment_status}" TextColor="{Binding Path=PayStatusColor}" FontSize="Body" FontAttributes="Bold"/>
                                                     </StackLayout>
                                                 </Grid>
                                             </StackLayout>

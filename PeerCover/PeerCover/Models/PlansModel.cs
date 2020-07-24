@@ -107,6 +107,29 @@ namespace PeerCover.Models
             }
         }
         public string status { get; set; }
+        public string newStatus
+        {
+            get
+            {
+                if (status.Contains("Not Paid") && is_expired.Contains("0"))
+                {
+                    var newStat1 = "Not Paid";
+                    return newStat1;
+                }
+                else if (status.Contains("Paid") && is_expired.Contains("0"))
+                {
+                    var newStat2 = "Paid";
+                    return newStat2;
+                }
+                else if (status.Contains("Paid") && is_expired.Contains("1"))
+                {
+                    var newStat3 = "Expired";
+                    return newStat3;
+                }
+                var newStat4 = "Paid"; 
+                return newStat4;
+            }
+        }
         public Color Status_color
         {
             get
@@ -115,14 +138,19 @@ namespace PeerCover.Models
                 {
                     return Color.FromHex("FA9917");
                 }
-                else if (status.Contains("Paid"))
+                else if (status.Contains("Paid") && is_expired.Contains("0"))
                 {
                     return Color.FromHex("2fcf8f");
                 }
-                return Color.FromHex("FA9917");
+                else if (status.Contains("Paid") && is_expired.Contains("1"))
+                {
+                    return Color.Red;
+                }
+                    return Color.FromHex("FA9917");
             }
         }
         public string is_expired { get; set; }
+        public string isClaimOngoing { get; set; }
         public string exDate
         {
             get

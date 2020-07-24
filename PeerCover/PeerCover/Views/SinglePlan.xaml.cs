@@ -39,37 +39,67 @@ namespace PeerCover.Views
 
         public async void LoadSinglePlan(string subscription_id)
         {
-            await PopupNavigation.Instance.PushAsync(new PopLoader());
-            var url = Helper.NewPlanUrl + subscription_id;
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-            var result = await client.GetStringAsync(url);
-            var UsersList = JsonConvert.DeserializeObject<ActiveSubModel>(result);
+            try
+            {
+                await PopupNavigation.Instance.PushAsync(new PopLoader());
+                var url = Helper.NewPlanUrl + subscription_id;
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(url);
+                var UsersList = JsonConvert.DeserializeObject<ActiveSubModel>(result);
 
-            SinglePlanDetails.BindingContext = UsersList.subscription[0];
-            policyNo = UsersList.subscription[0].policy_number;
-            var BtnCheck = UsersList.subscription[0].status;
-            var expCheck = UsersList.subscription[0].is_expired;
-            await PopupNavigation.Instance.PopAsync(true);
+                SinglePlanDetails.BindingContext = UsersList.subscription[0];
+                policyNo = UsersList.subscription[0].policy_number;
+                var BtnCheck = UsersList.subscription[0].status;
+                var claimStats = UsersList.subscription[0].isClaimOngoing;
+                var expCheck = UsersList.subscription[0].is_expired;
+                await PopupNavigation.Instance.PopAsync(true);
 
-            if (BtnCheck.Contains("Not Paid"))
-            {
-                PayStc1.IsVisible = false;
-                PayStck.IsVisible = true;
-                RenewStck.IsVisible = false;
+                if (BtnCheck.Contains("Not Paid"))
+                {
+                    PayStc1.IsVisible = false;
+                    PayStck.IsVisible = true;
+                    PayStc2.IsVisible = false;
+                    RenewStck.IsVisible = false;
+                    PayStc3.IsVisible = false;
+                }
+                else if (BtnCheck.Contains("Awaiting Verification"))
+                {
+                    PayStc1.IsVisible = false;
+                    PayStck.IsVisible = false;
+                    PayStc2.IsVisible = false;
+                    RenewStck.IsVisible = false;
+                    PayStc3.IsVisible = true;
+                }
+                else if (BtnCheck.Contains("Paid") && expCheck.Contains("0") && claimStats.Contains("0"))
+                {
+                    PayStc1.IsVisible = true;
+                    PayStc2.IsVisible = false;
+                    PayStc3.IsVisible = false;
+                    PayStck.IsVisible = false;
+                    RenewStck.IsVisible = false;
+                }
+                else if (BtnCheck.Contains("Paid") && expCheck.Contains("0") && claimStats.Contains("1"))
+                {
+                    PayStc1.IsVisible = false;
+                    PayStc2.IsVisible = true;
+                    PayStck.IsVisible = false;
+                    PayStc3.IsVisible = false;
+                    RenewStck.IsVisible = false;
+                }
+                else if (BtnCheck.Contains("Paid") && expCheck.Contains("1"))
+                {
+                    PayStc1.IsVisible = false;
+                    PayStck.IsVisible = false;
+                    PayStc2.IsVisible = false;
+                    PayStc3.IsVisible = false;
+                    RenewStck.IsVisible = true;
+                }
             }
-            else if (BtnCheck.Contains("Paid") && expCheck.Contains("0"))
+            catch (Exception)
             {
-                PayStc1.IsVisible = true;
-                PayStck.IsVisible = false;
-                RenewStck.IsVisible = false;
-            }
-            else if (BtnCheck.Contains("Paid") && expCheck.Contains("1"))
-            {
-                PayStc1.IsVisible = false;
-                PayStck.IsVisible = false;
-                RenewStck.IsVisible = true;
+                return;
             }
 
         }

@@ -15,7 +15,7 @@
         <vm:LoginViewModel />
     </ContentPage.BindingContext>
 
-    <pv:PancakeView HasShadow="True" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundGradientAngle="180">
+    <pv:PancakeView HasShadow="True" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <pv:PancakeView.BackgroundGradientStops>
             <pv:GradientStopCollection>
                 <pv:GradientStop Color="#E7EDF8" Offset="0"/>

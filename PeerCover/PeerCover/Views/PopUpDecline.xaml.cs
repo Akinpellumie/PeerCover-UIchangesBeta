@@ -22,6 +22,7 @@ namespace PeerCover.Views
         {
             declineId = id;
             InitializeComponent();
+            this.CloseWhenBackgroundIsClicked = false;
         }
 
         private async void DeclineClmClicked(object sender, EventArgs e)
@@ -29,53 +30,65 @@ namespace PeerCover.Views
             indicator.IsVisible = true;
             indicator.IsRunning = true;
 
-            DeclineAmtModel update = new DeclineAmtModel()
+            try
             {
-                claimOwnerUsername = HelperAppSettings.username,
-                status = "Recommendation Rejected",
-                claimId = declineId,
-                rejectionMessage = RejInput.Text,
-            };
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-
-            var json = JsonConvert.SerializeObject(update);
-            HttpContent result = new StringContent(json);
-            result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            var response = await client.PutAsync(Helper.GetClaimsUrl, result);
-
-            if (response.IsSuccessStatusCode)
-            {
-                await DisplayAlert("Success!!!", "Your claim's review has been forwarded and will be attended to in a shortwhile.", "Ok");
-                await PopupNavigation.Instance.PopAsync(true);
-                await Shell.Current.Navigation.PushAsync(new ClaimsPage());
-                indicator.IsVisible = false;
-                indicator.IsRunning = false;
-
-            }
-            else
-            {
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                DeclineAmtModel update = new DeclineAmtModel()
                 {
-                    await DisplayAlert("PeerCover", "Server error. Please try again later" , "Ok");
+                    claimOwnerUsername = HelperAppSettings.username,
+                    status = "Recommendation Rejected",
+                    claimId = declineId,
+                    rejectionMessage = RejInput.Text,
+                };
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+
+                var json = JsonConvert.SerializeObject(update);
+                HttpContent result = new StringContent(json);
+                result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                var response = await client.PutAsync(Helper.GetClaimsUrl, result);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Success!!!", "Your claim's review has been forwarded and will be attended to in a shortwhile.", "Ok");
+                    await PopupNavigation.Instance.PopAsync(true);
+                    await Shell.Current.Navigation.PushAsync(new ClaimsPage());
                     indicator.IsVisible = false;
                     indicator.IsRunning = false;
-                }
-                else if(response.StatusCode== System.Net.HttpStatusCode.Unauthorized)
-                {
-                    await DisplayAlert("Oops!", "Session timeout. Please login again.", "Ok");
-                    Application.Current.MainPage = new NavigationPage(new LoginPage());
+
                 }
                 else
                 {
-                    indicator.IsRunning = false;
-                    indicator.IsVisible = false;
-                    await DisplayAlert("Whoops!", "Network error. Please try again later", "Ok");
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        await DisplayAlert("PeerCover", "Server error. Please try again later", "Ok");
+                        indicator.IsVisible = false;
+                        indicator.IsRunning = false;
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        await DisplayAlert("Oops!", "Session timeout. Please login again.", "Ok");
+                        Application.Current.MainPage = new NavigationPage(new LoginPage());
+                    }
+                    else
+                    {
+                        indicator.IsRunning = false;
+                        indicator.IsVisible = false;
+                        await DisplayAlert("Whoops!", "Network error. Please try again later", "Ok");
 
+                    }
                 }
             }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        public async void Button_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PopAsync(true);
         }
     }
 }

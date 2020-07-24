@@ -120,51 +120,65 @@ namespace PeerCover.Views
         //}
         public async void CallIconUpload(object sender, EventArgs e)
         {
-            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            try
             {
-                await PopupNavigation.Instance.PushAsync(new PopUpNoInternet());
+                if (Connectivity.NetworkAccess == NetworkAccess.None)
+                {
+                    await PopupNavigation.Instance.PushAsync(new PopUpNoInternet());
+                    return;
+                }
+
+                await PopupNavigation.Instance.PushAsync(new PopLoader());
+                if (string.IsNullOrEmpty(ProfileImage) && string.IsNullOrEmpty(filename))
+                {
+                    await UpdateMemberClicked();
+                }
+                else if (string.IsNullOrEmpty(ProfileImage) && !string.IsNullOrEmpty(filename))
+                {
+                    await IconImg_Clicked();
+                    await UpdateMemberClicked();
+                }
+                else if (!string.IsNullOrEmpty(ProfileImage) && !string.IsNullOrEmpty(filename))
+                {
+                    await IconImg_Clicked();
+                    //await Task.CompletedTask;
+                    //{ { await IconImg_Clicked(); } }
+                    await UpdateMemberClicked();
+                }
+                else if (!string.IsNullOrEmpty(ProfileImage) && string.IsNullOrEmpty(filename))
+                {
+                    await UpdateMemberClicked();
+                }
+                await PopupNavigation.Instance.PopAsync(true);
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Oops!","An error occurred. Try again later!","Ok");
                 return;
             }
-
-            await PopupNavigation.Instance.PushAsync(new PopLoader());
-            if (string.IsNullOrEmpty(ProfileImage) && string.IsNullOrEmpty(filename))
-            {
-                await UpdateMemberClicked();
-            }
-            else if (string.IsNullOrEmpty(ProfileImage) && !string.IsNullOrEmpty(filename))
-            {
-                await IconImg_Clicked();
-                await UpdateMemberClicked();
-            }
-            else if (!string.IsNullOrEmpty(ProfileImage) && !string.IsNullOrEmpty(filename))
-            {
-                await IconImg_Clicked();
-                //await Task.CompletedTask;
-                //{ { await IconImg_Clicked(); } }
-                await UpdateMemberClicked();
-            }
-            else if (!string.IsNullOrEmpty(ProfileImage) && string.IsNullOrEmpty(filename))
-            {
-                await UpdateMemberClicked();
-            }
-            await PopupNavigation.Instance.PopAsync(true);
         }
 
         public async void CallPrfUploadAsync(object sender, EventArgs e)
         {
-            var file2 = await CrossFilePicker.Current.PickFile();
-
-            bfitem = new FileBytesItem("fileName", file2.DataArray, file2.FileName);
-
-            FilePathItem fpitem = new FilePathItem("fileName", file2.FilePath);
-
-            EditUserImage.Source = ImageSource.FromStream(() => file2.GetStream());
-
-            if (file2 != null)
+            try
             {
-                filename = file2.FilePath;
-            }
+                var file2 = await CrossFilePicker.Current.PickFile();
 
+                bfitem = new FileBytesItem("fileName", file2.DataArray, file2.FileName);
+
+                FilePathItem fpitem = new FilePathItem("fileName", file2.FilePath);
+
+                EditUserImage.Source = ImageSource.FromStream(() => file2.GetStream());
+
+                if (file2 != null)
+                {
+                    filename = file2.FilePath;
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         async Task

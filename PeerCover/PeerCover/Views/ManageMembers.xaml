@@ -69,7 +69,7 @@
                                         <StackLayout Grid.Row="0" Margin="4" Grid.Column="0" HeightRequest="50">
                                             <pv:PancakeView HasShadow="True" HeightRequest="50" WidthRequest="50" CornerRadius="50" Margin="15,5,0,0"
                                                         HorizontalOptions="Start" VerticalOptions="Center" BorderIsDashed="True" BorderThickness="2" 
-                                                           BorderColor="Accent" BackgroundGradientAngle="180">
+                                                           BorderColor="Accent">
                                                 <pv:PancakeView.BackgroundGradientStops>
                                                     <pv:GradientStopCollection>
                                                         <pv:GradientStop Color="White" Offset="0"/>

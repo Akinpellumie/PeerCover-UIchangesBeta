@@ -39,11 +39,12 @@ namespace PeerCover.Views
 
         public async void GetPenRequests()
         {
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
 
             try
             {
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
+
                 HttpClient client = new HttpClient();
                 var dashboardEndpoint = Helper.GetRequestsUrl + HelperAppSettings.community_code + Helper.getRequestFilter + "pending";
                 client.DefaultRequestHeaders.Clear();
@@ -81,12 +82,18 @@ namespace PeerCover.Views
 
         public void PendingTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item == null) return;
-            var selectedUser = e.Item as RequestsModel;
-            PopupNavigation.Instance.PushAsync(new PopUpRequests(selectedUser.request_id));
-            MessagingCenter.Subscribe<RequestsModel>(this, "PopUpData", (value) => { });
-            GetPenRequests();
-            //await Shell.Current.Navigation.PushAsync(new PopUp(selectedUser.id));
+            try
+            {
+                if (e.Item == null) return;
+                var selectedUser = e.Item as RequestsModel;
+                PopupNavigation.Instance.PushAsync(new PopUpRequests(selectedUser.request_id));
+                MessagingCenter.Subscribe<RequestsModel>(this, "PopUpData", (value) => { });
+                GetPenRequests();
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
         }
     }

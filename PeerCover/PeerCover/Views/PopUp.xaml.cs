@@ -117,5 +117,6 @@ namespace PeerCover.Views
             await Shell.Current.Navigation.PushModalAsync(new SingleMemberPage(MemId, UserName));
 
         }
+
     }
 }

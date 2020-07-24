@@ -36,47 +36,54 @@ namespace PeerCover.Views
                 return;
             }
             await PopupNavigation.Instance.PushAsync(new PopAcctLoader());
-            User update = new User()
+            try
             {
-                username = pswdReset.Text,
-            };
-            var client = new HttpClient();
-            //client.DefaultRequestHeaders.Clear();
-            //client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                User update = new User()
+                {
+                    username = pswdReset.Text,
+                };
+                var client = new HttpClient();
+                //client.DefaultRequestHeaders.Clear();
+                //client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
 
-            var json = JsonConvert.SerializeObject(update);
-            HttpContent result = new StringContent(json);
-            result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var json = JsonConvert.SerializeObject(update);
+                HttpContent result = new StringContent(json);
+                result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await client.PostAsync(Helper.forgotPswdUrl, result);
+                var response = await client.PostAsync(Helper.forgotPswdUrl, result);
 
-            if (response.IsSuccessStatusCode)
-            {
-                await PopupNavigation.Instance.PopAsync(true);
-                await DisplayAlert("Success!", "Kindly check your mailbox for new password", "Ok");
-                ContentPage fpm = new LoginPage();
-                Application.Current.MainPage = fpm;
-                indicator.IsVisible = false;
-                indicator.IsRunning = false;
-
-            }
-            else
-            {
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                if (response.IsSuccessStatusCode)
                 {
                     await PopupNavigation.Instance.PopAsync(true);
-                    await DisplayAlert("Whoopps!", " Server unavailable. Please try again later!", "Ok");
+                    await DisplayAlert("Success!", "Kindly check your mailbox for new password", "Ok");
+                    ContentPage fpm = new LoginPage();
+                    Application.Current.MainPage = fpm;
                     indicator.IsVisible = false;
                     indicator.IsRunning = false;
+
                 }
                 else
                 {
-                    indicator.IsRunning = false;
-                    indicator.IsVisible = false;
-                    await PopupNavigation.Instance.PopAsync(true);
-                    await DisplayAlert("Whoopps!", "Please try again later", "Ok");
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        await PopupNavigation.Instance.PopAsync(true);
+                        await DisplayAlert("Whoops!", "User does not Exist!", "Ok");
+                        indicator.IsVisible = false;
+                        indicator.IsRunning = false;
+                    }
+                    else
+                    {
+                        indicator.IsRunning = false;
+                        indicator.IsVisible = false;
+                        await PopupNavigation.Instance.PopAsync(true);
+                        await DisplayAlert("Whoopps!", "Please try again later", "Ok");
 
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
     }

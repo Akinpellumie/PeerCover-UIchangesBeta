@@ -33,11 +33,12 @@ namespace PeerCover.Views
 
         public async void GetRequests()
         {
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
 
             try
             {
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
+
                 HttpClient client = new HttpClient();
                 var dashboardEndpoint = Helper.GetRequestsUrl + HelperAppSettings.community_code;
                 client.DefaultRequestHeaders.Clear();
@@ -88,22 +89,29 @@ namespace PeerCover.Views
 
         public void RequestTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item == null) return;
-            var selectedUser = e.Item as RequestsModel;
-            if (selectedUser.status.Contains("Accepted"))
+            try
             {
-                DisplayAlert("Oops!", "Request Accepted Already!", "Ok");
+                if (e.Item == null) return;
+                var selectedUser = e.Item as RequestsModel;
+                if (selectedUser.status.Contains("Accepted"))
+                {
+                    DisplayAlert("Oops!", "Request Accepted Already!", "Ok");
+                    return;
+                }
+                else if (selectedUser.status.Contains("Declined"))
+                {
+                    DisplayAlert("Oops!", "Request Declined Already", "Ok");
+                }
+                else if (selectedUser.status.Contains("Pending"))
+                {
+                    PopupNavigation.Instance.PushAsync(new PopUpRequests(selectedUser.request_id));
+                    MessagingCenter.Subscribe<RequestsModel>(this, "PopUpData", (value) => { });
+                    GetRequests();
+                }
+            }
+            catch (Exception)
+            {
                 return;
-            }
-            else if (selectedUser.status.Contains("Declined"))
-            {
-                DisplayAlert("Oops!", "Request Declined Already", "Ok");
-            }
-            else if (selectedUser.status.Contains("Pending"))
-            {
-                PopupNavigation.Instance.PushAsync(new PopUpRequests(selectedUser.request_id));
-                MessagingCenter.Subscribe<RequestsModel>(this, "PopUpData", (value) => { });
-                GetRequests();
             }
         }
 

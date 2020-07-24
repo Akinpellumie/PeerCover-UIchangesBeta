@@ -27,32 +27,40 @@ namespace PeerCover.Views
         }
         public async void GetSubDetails()
         {
-            indicator.IsRunning = true;
-            indicator.IsVisible = true;
-
-
-            HttpClient client = new HttpClient();
-            var UserCountEndpoint = Helper.getActiveSubUrl + HelperAppSettings.username + "&isActive=0";
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-
-            var result = await client.GetStringAsync(UserCountEndpoint);
-            var UsersCnt = JsonConvert.DeserializeObject<ActSubModel>(result);
-            //Users = new ObservableCollection<AddedUsers>(UsersList);
-            //var hut = UsersCnt.subscriptions;
-            expPreList.ItemsSource = UsersCnt.subscriptions;
-            if (UsersCnt.subscriptions.Count == 0)
+            try
             {
-                FrmInB.IsVisible = true;
-                InActList.IsVisible = false;
+
+                indicator.IsRunning = true;
+                indicator.IsVisible = true;
+
+                HttpClient client = new HttpClient();
+                var UserCountEndpoint = Helper.getActiveSubUrl + HelperAppSettings.username + "&isActive=0";
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+
+                var result = await client.GetStringAsync(UserCountEndpoint);
+                var UsersCnt = JsonConvert.DeserializeObject<ActSubModel>(result);
+                //Users = new ObservableCollection<AddedUsers>(UsersList);
+                //var hut = UsersCnt.subscriptions;
+                expPreList.ItemsSource = UsersCnt.subscriptions;
+                indicator.IsRunning = false;
+                indicator.IsVisible = false;
+                if (UsersCnt.subscriptions.Count == 0)
+                {
+                    FrmInB.IsVisible = true;
+                    InActList.IsVisible = false;
+                }
+                else
+                {
+                    InActList.IsVisible = true;
+                    FrmInB.IsVisible = false;
+                }
             }
-            else
+            catch (Exception)
             {
-                InActList.IsVisible = true;
-                FrmInB.IsVisible = false;
+                return;
             }
-            indicator.IsRunning = false;
-            indicator.IsVisible = false;
+            
         }
 
 

@@ -67,7 +67,7 @@
                                                      BackgroundColor="Transparent" VerticalOptions="CenterAndExpand">
                                                     <pv:PancakeView HasShadow="True" HeightRequest="50" WidthRequest="50" CornerRadius="25" Margin="15,5,0,0"
                                                         HorizontalOptions="Start" VerticalOptions="Center" BorderIsDashed="True" BorderThickness="1" 
-                                                           BorderColor="Accent" BackgroundGradientAngle="180">
+                                                           BorderColor="Accent">
                                                         <pv:PancakeView.BackgroundGradientStops>
                                                             <pv:GradientStopCollection>
                                                                 <pv:GradientStop Color="White" Offset="0"/>

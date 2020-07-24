@@ -16,45 +16,53 @@ namespace PeerCover.Views
         {
             ReqId = request_id;
             InitializeComponent();
+            this.CloseWhenBackgroundIsClicked = false;
         }
 
         public async void AcceptedBtn_Clicked(object sender, EventArgs e)
         {
             indicator.IsRunning = true;
             indicator.IsVisible = true;
-            RequestsModel update = new RequestsModel()
+            try
             {
-                status = "Accepted",
-                reviewedBy = HelperAppSettings.username,
-                requestId = ReqId,
-            };
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-
-            var json = JsonConvert.SerializeObject(update);
-            HttpContent result = new StringContent(json);
-            result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            var response = await client.PutAsync(Helper.UpdateRequestUrl, result);
-
-            if (response.IsSuccessStatusCode)
-            {
-                await DisplayAlert("Alert", "Request Accepted Successfully!!!", "Ok");
-                await PopupNavigation.Instance.PopAsync(true);
-            }
-            else
-            {
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                RequestsModel update = new RequestsModel()
                 {
-                    await DisplayAlert("Alert", "Whoopss! Try Again Later", "Ok");
+                    status = "Accepted",
+                    reviewedBy = HelperAppSettings.username,
+                    requestId = ReqId,
+                };
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+
+                var json = JsonConvert.SerializeObject(update);
+                HttpContent result = new StringContent(json);
+                result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                var response = await client.PutAsync(Helper.UpdateRequestUrl, result);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Alert", "Request Accepted Successfully!!!", "Ok");
                     await PopupNavigation.Instance.PopAsync(true);
                 }
                 else
                 {
-                    await DisplayAlert("Alert", "Please try again later", "Ok");
-                    await PopupNavigation.Instance.PopAsync(true);
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        await DisplayAlert("Alert", "Whoopss! Try Again Later", "Ok");
+                        await PopupNavigation.Instance.PopAsync(true);
+                    }
+                    else
+                    {
+                        await DisplayAlert("Alert", "Please try again later", "Ok");
+                        await PopupNavigation.Instance.PopAsync(true);
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
 
@@ -62,44 +70,56 @@ namespace PeerCover.Views
         {
             indicator.IsRunning = true;
             indicator.IsVisible = true;
-            RequestsModel update = new RequestsModel()
+            try
             {
-                status = "Declined",
-                reviewedBy = HelperAppSettings.username,
-                requestId = ReqId,
-            };
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-
-            var json = JsonConvert.SerializeObject(update);
-            HttpContent result = new StringContent(json);
-            result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            var response = await client.PutAsync(Helper.UpdateRequestUrl, result);
-
-            if (response.IsSuccessStatusCode)
-            {
-                await DisplayAlert("Alert", "Request Declined!!!", "Ok");
-                await PopupNavigation.Instance.PopAsync(true);
-            }
-            else
-            {
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                RequestsModel update = new RequestsModel()
                 {
-                    await DisplayAlert("Alert", "Whoopss! Try Again Later", "Ok");
+                    status = "Declined",
+                    reviewedBy = HelperAppSettings.username,
+                    requestId = ReqId,
+                };
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+
+                var json = JsonConvert.SerializeObject(update);
+                HttpContent result = new StringContent(json);
+                result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                var response = await client.PutAsync(Helper.UpdateRequestUrl, result);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Alert", "Request Declined!!!", "Ok");
                     await PopupNavigation.Instance.PopAsync(true);
-                    indicator.IsVisible = false;
-                    indicator.IsRunning = false;
                 }
                 else
                 {
-                    await DisplayAlert("Alert", "Please try again later", "Ok");
-                    await PopupNavigation.Instance.PopAsync(true);
-                    indicator.IsVisible = false;
-                    indicator.IsRunning = false;
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        await DisplayAlert("Alert", "Whoopss! Try Again Later", "Ok");
+                        await PopupNavigation.Instance.PopAsync(true);
+                        indicator.IsVisible = false;
+                        indicator.IsRunning = false;
+                    }
+                    else
+                    {
+                        await DisplayAlert("Alert", "Please try again later", "Ok");
+                        await PopupNavigation.Instance.PopAsync(true);
+                        indicator.IsVisible = false;
+                        indicator.IsRunning = false;
+                    }
                 }
             }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        public async void Button_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PopAsync(true);
         }
     }
 }

@@ -68,7 +68,9 @@
                        TextColor="{StaticResource TxtColor}" FontAttributes="Bold" Margin="10,2,10,10"/>
                     </StackLayout>
 
-                  
+                    <StackLayout IsVisible="False" x:Name="VsStats">
+                        <Label Text="Your claim is under review!!!" FontSize="Caption" TextColor="#FA9917" FontAttributes="Bold" />
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

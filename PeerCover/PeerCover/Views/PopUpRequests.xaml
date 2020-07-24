@@ -26,6 +26,11 @@
                  HorizontalOptions="Center"
                  VerticalOptions="Center">
 
+        <StackLayout HorizontalOptions="End" Margin="5" IsVisible="True" x:Name="BtnClose">
+            <Button Text="Close X" FontSize="Small" HeightRequest="30" TextColor="Red" BackgroundColor="Transparent"
+                    BorderColor="Red" BorderWidth="2" CornerRadius="45" Clicked="Button_Clicked"/>
+        </StackLayout>
+        
         <ActivityIndicator x:Name="indicator" IsVisible="False" Margin="0,5,0,0"  Grid.RowSpan="2" 
                            VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" IsRunning="False" />
         <StackLayout>

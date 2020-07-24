@@ -26,6 +26,11 @@
                  HorizontalOptions="StartAndExpand"
                  VerticalOptions="Center">
 
+        <StackLayout HorizontalOptions="End" Margin="5" IsVisible="True" x:Name="BtnClose">
+            <Button Text="Close X" FontSize="Small" HeightRequest="30" TextColor="Red" BackgroundColor="Transparent"
+                    BorderColor="Red" BorderWidth="2" CornerRadius="45" Clicked="Button_Clicked"/>
+        </StackLayout>
+
         <Label Margin="10" Text="Note that declining a recommendation more than twice will attract a penalty from the Community!!!"
        TextColor="{StaticResource TxtColor}" FontSize="15" LineBreakMode="WordWrap"/>
 

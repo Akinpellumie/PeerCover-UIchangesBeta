@@ -22,8 +22,14 @@ namespace PeerCover.Views
         {
             InitializeComponent();
             CheckInternet();
+            GetNewNots();
             Permission();
             GetUserById();
+            DashList.RefreshCommand = new Command(() => {
+                //Do your stuff.    
+                GetSubDetails();
+                DashList.IsRefreshing = false;
+            });
             //GetSubs();
             GetSubDetails();
             LblName.Text = HelperAppSettings.Name;
@@ -45,28 +51,32 @@ namespace PeerCover.Views
             await Permissions.RequestAsync<Permissions.LocationAlways>();
             await Permissions.RequestAsync<Permissions.NetworkState>();
         }
-        //public async void GetSubs()
 
-        //{
-        //    indicator.IsRunning = true;
-        //    indicator.IsVisible = true;
-
-
-        //    HttpClient client = new HttpClient();
-        //    var dashboardEndpoint = Helper.GetPlansUrl;
-        //    client.DefaultRequestHeaders.Clear();
-        //    client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-        //    var result = await client.GetStringAsync(dashboardEndpoint);
-        //    var PlanList = JsonConvert.DeserializeObject<PlansListModel>(result);
-
-        //    LblPlanName.BindingContext = PlanList.plans[0];
-        //    LblPlanDesc.BindingContext = PlanList.plans[0];
-
-
-
-        //    indicator.IsRunning = false;
-        //    indicator.IsVisible = false;
-        //}
+        public async void GetNewNots()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var dashboardEndpoint = Helper.GetNotificationsUrl + HelperAppSettings.username + Helper.msgReadFilter;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                var result = await client.GetStringAsync(dashboardEndpoint);
+                var NotsList = JsonConvert.DeserializeObject<NotificationsModel>(result);
+                if(NotsList.countUnread.Contains("0"))
+                {
+                    DashImage.Source = "notification.png";
+                }
+                else
+                {
+                    DashImage.Source = "notificate.png";
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+        
 
         public async void GetSubDetails()
         {
@@ -75,27 +85,25 @@ namespace PeerCover.Views
                 await PopupNavigation.Instance.PushAsync(new PopUpNoInternet());
                 return;
             }
+            try
+            {
+                HttpClient client = new HttpClient();
+                var UserCountEndpoint = Helper.getActiveSubUrl + HelperAppSettings.username;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
 
-            HttpClient client = new HttpClient();
-            var UserCountEndpoint = Helper.getActiveSubUrl + HelperAppSettings.username;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
-
-            var result = await client.GetStringAsync(UserCountEndpoint);
-            var UsersCnt = JsonConvert.DeserializeObject<ActSubModel>(result);
-            //Users = new ObservableCollection<AddedUsers>(UsersList);
-            //var hut = UsersCnt.subscriptions;
-            DashList.ItemsSource = UsersCnt.subscriptions;
-
+                var result = await client.GetStringAsync(UserCountEndpoint);
+                var UsersCnt = JsonConvert.DeserializeObject<ActSubModel>(result);
+                //Users = new ObservableCollection<AddedUsers>(UsersList);
+                //var hut = UsersCnt.subscriptions;
+                DashList.ItemsSource = UsersCnt.subscriptions;
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
-        //async void ViewPlanTapped(object sender, ItemTappedEventArgs e)
-        //{
-        //    if (e.Item == null) return;
-        //    var selectedItem = e.Item as Asset;
-        //    await Shell.Current.Navigation.PushModalAsync(new EditAsset(selectedItem.item_id));
-
-        //}
 
         public async void ViewSubTapped(object sender, ItemTappedEventArgs e)
         {
@@ -147,11 +155,18 @@ namespace PeerCover.Views
 
         public async void SharingClicked(object sender, EventArgs e)
         {
-            await Share.RequestAsync(new ShareTextRequest
+            try
             {
-                Text = "Community Name:" + " " + HelperAppSettings.community_name + "," + " " + "Community Code:" + " " + HelperAppSettings.community_code,
-                Title = "Share Community Code!!!"
-            });
+                await Share.RequestAsync(new ShareTextRequest
+                {
+                    Text = "Community Name:" + " " + HelperAppSettings.community_name + "," + " " + "Community Code:" + " " + HelperAppSettings.community_code,
+                    Title = "Share Community Code!!!"
+                });
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
         public async void NotifyIconClicked(object sender, EventArgs e)
         {
@@ -161,6 +176,7 @@ namespace PeerCover.Views
         {
             base.OnAppearing();
             GetUserById();
+            GetNewNots();
             GetSubDetails();
             try
             {
@@ -171,56 +187,67 @@ namespace PeerCover.Views
                 return;
             }
 
-
-            if (!string.IsNullOrEmpty(appToken))
+            try
             {
-                User update = new User()
+                if (!string.IsNullOrEmpty(appToken))
                 {
-                    username = HelperAppSettings.username,
-                    registrationToken = appToken
-                };
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+                    User update = new User()
+                    {
+                        username = HelperAppSettings.username,
+                        registrationToken = appToken
+                    };
+                    var client = new HttpClient();
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
 
-                var json = JsonConvert.SerializeObject(update);
-                HttpContent result = new StringContent(json);
-                result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    var json = JsonConvert.SerializeObject(update);
+                    HttpContent result = new StringContent(json);
+                    result.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                var response = await client.PutAsync(Helper.MemRegToken, result);
-                if (response.IsSuccessStatusCode)
-                {
-                    Console.WriteLine("User App Registration Token sent successfully!");
+                    var response = await client.PutAsync(Helper.MemRegToken, result);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("User App Registration Token sent successfully!");
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
 
         public async void SignOutClicked(object sender, EventArgs e)
         {
-            bool result = await DisplayAlert("Hey!" , "Are you sure you want to sign out?", "Yes", "No");
-            if (result == true)
+            try
             {
-                ContentPage fpm = new LoginPage();
-                HelperAppSettings.Token = "";
-                HelperAppSettings.firstname = "";
-                HelperAppSettings.lastname = "";
-                HelperAppSettings.username = "";
-                HelperAppSettings.email = "";
-                HelperAppSettings.phonenumber = "";
-                HelperAppSettings.community_code = "";
-                HelperAppSettings.community_name = "";
-                HelperAppSettings.id = "";
-                HelperAppSettings.profile_img_url = "";
-                HelperAppSettings.priviledges = "";
-                HelperAppSettings.capName = "";
-                HelperAppSettings.Name = "";
-                Application.Current.MainPage = fpm;
+                bool result = await DisplayAlert("Hey!", "Are you sure you want to sign out?", "Yes", "No");
+                if (result == true)
+                {
+                    HelperAppSettings.Token = "";
+                    HelperAppSettings.firstname = "";
+                    HelperAppSettings.lastname = "";
+                    HelperAppSettings.username = "";
+                    HelperAppSettings.email = "";
+                    HelperAppSettings.phonenumber = "";
+                    HelperAppSettings.community_code = "";
+                    HelperAppSettings.community_name = "";
+                    HelperAppSettings.id = "";
+                    HelperAppSettings.profile_img_url = "";
+                    HelperAppSettings.priviledges = "";
+                    HelperAppSettings.capName = "";
+                    HelperAppSettings.Name = "";
+                    Application.Current.MainPage = new NavigationPage(new LoginPage());
+                }
+                else
+                {
+                    return;
+                }
             }
-            else
+            catch (Exception)
             {
-                return;
+
             }
-            
         }
 
         public void menuHider_clicked(object sender, EventArgs e)
@@ -262,24 +289,22 @@ namespace PeerCover.Views
 
         public async void GetUserById()
         {
-            HttpClient client = new HttpClient();
-            var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
+            try
+            {
+                HttpClient client = new HttpClient();
+                var UserdetailEndpoint = Helper.getMembersUrl + HelperAppSettings.id;
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", Helper.userprofile.token);
 
-            var result = await client.GetStringAsync(UserdetailEndpoint);
-            var MemberDetails = JsonConvert.DeserializeObject<MemberDetailsModel>(result);
-            
-            ProfileImage = MemberDetails.member[0].profile_img_url;
-            
-            if (string.IsNullOrEmpty(ProfileImage))
-            {
-                DashImage.Source = "undrawPro.svg";
+                var result = await client.GetStringAsync(UserdetailEndpoint);
+                var MemberDetails = JsonConvert.DeserializeObject<MemberDetailsModel>(result);
+
+                ProfileImage = MemberDetails.member[0].profile_img_url;
+
             }
-            else
+            catch (Exception)
             {
-                var imgUrl = Helper.ImageUrl + ProfileImage;
-                DashImage.Source = imgUrl;
+                return;
             }
         }
      }

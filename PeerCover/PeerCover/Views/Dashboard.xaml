@@ -13,10 +13,10 @@
              Title="Dashboard">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="+"
+        <!--<ToolbarItem Text="+"
                      Icon="notifyMe.png"
                      Priority="0"
-                     Clicked="NotifyIconClicked"/>
+                     Clicked="NotifyIconClicked"/>-->
         <ToolbarItem Order="Secondary"
                      Text="Change Password" Clicked="changePassClicked"
                      Priority="1"/>
@@ -64,16 +64,20 @@
                                                      BackgroundColor="Transparent" VerticalOptions="CenterAndExpand">
                                                 <pv:PancakeView HasShadow="True" HeightRequest="50" WidthRequest="50" CornerRadius="25" Margin="15,5,0,0"
                                                         HorizontalOptions="Start" VerticalOptions="Center" BorderIsDashed="True" BorderThickness="1" 
-                                                           BorderColor="Accent" BackgroundGradientAngle="180">
+                                                           BorderColor="Accent"  BackgroundColor="Accent">
                                                     <pv:PancakeView.BackgroundGradientStops>
                                                         <pv:GradientStopCollection>
-                                                            <pv:GradientStop Color="White" Offset="0"/>
-                                                            <pv:GradientStop Color="WhiteSmoke" Offset="1"/>
+                                                            <pv:GradientStop Color="Accent" Offset="0"/>
+                                                            <pv:GradientStop Color="Accent" Offset="1"/>
                                                         </pv:GradientStopCollection>
                                                     </pv:PancakeView.BackgroundGradientStops>
-                                                    <ff1:SvgCachedImage HeightRequest="100" x:Name="DashImage"
+                                                    <Image HeightRequest="100" x:Name="DashImage"
                                      WidthRequest="100" Grid.RowSpan="2"
-                                    Aspect="AspectFill"  HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    Aspect="AspectFill"  HorizontalOptions="Center" VerticalOptions="Center">
+                                                        <Image.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="NotifyIconClicked"/>
+                                                        </Image.GestureRecognizers>
+                                                    </Image>
                                                 </pv:PancakeView>
                                             </StackLayout>
                                         </Grid>
@@ -100,23 +104,23 @@
                                    WidthRequest="24" HeightRequest="24" Clicked="menuHider_clicked" HorizontalOptions="End" Margin="0,0,5,0"/>
                             </Grid>
                             <StackLayout x:Name="menuHide" IsVisible="True">
-                                <Grid HorizontalOptions="CenterAndExpand" Margin="5" ColumnSpacing="10">
+                                <Grid HorizontalOptions="FillAndExpand" Margin="3" ColumnSpacing="5">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Button Grid.Column="0" Text="New Plan" TextColor="{StaticResource TxtColor}" 
                                         FontSize="Small" ContentLayout="Top, 0" Padding="5" ImageSource="subAct.png" Clicked="Sub_Clicked"
-                                       BorderWidth="1" HeightRequest="50" BackgroundColor="White" BorderColor="Accent"/>
+                                       BorderWidth="1" HeightRequest="60" BackgroundColor="White" BorderColor="Accent"/>
 
                                     <Button Grid.Column="1" Text="Profile" Padding="5" TextColor="{StaticResource TxtColor}" 
                                         FontSize="Small" ContentLayout="Top, 0" ImageSource="editMe.png" Clicked="ProDash_Clicked"
-                                       BorderWidth="1" HeightRequest="50" BackgroundColor="White" BorderColor="Accent"/>
+                                       BorderWidth="1" HeightRequest="60" BackgroundColor="White" BorderColor="Accent"/>
 
                                     <Button Grid.Column="2" Text="Members" TextColor="{StaticResource TxtColor}" 
                                         FontSize="Small" ContentLayout="Top, 0" Padding="5" ImageSource="memberIcn.png" Clicked="MemDash_Clicked"
-                                       BorderWidth="1" HeightRequest="50" BackgroundColor="White" BorderColor="Accent"/>
+                                       BorderWidth="1" HeightRequest="60" BackgroundColor="White" BorderColor="Accent"/>
 
                                 </Grid>
                             </StackLayout>
@@ -148,7 +152,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="ACTIVE SUBSCRIPTIONS" Grid.Column="0" Margin="10,0,0,0" HorizontalOptions="Start" 
+                                <Label Text="SUBSCRIPTIONS" Grid.Column="0" Margin="10,0,0,0" HorizontalOptions="Start" 
                        VerticalOptions="CenterAndExpand" TextColor="{StaticResource Primary}" FontSize="Subtitle"/>
                                 <ImageButton x:Name="chvUp" Source="chevronDown.png" Grid.Column="1" Aspect="Fill" HeightRequest="24" 
                                              WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="End" Clicked="SubHider_clicked" Margin="0,0,5,0"/>
@@ -156,7 +160,7 @@
                             <ScrollView>
                                 <StackLayout x:Name="actSubHide" IsVisible="True">
                                     <ListView x:Name="DashList" HasUnevenRows="True" ItemTapped="ViewSubTapped"
-                          SeparatorVisibility="Default" SeparatorColor="{Binding Path=Status_color}" IsPullToRefreshEnabled="False">
+                          SeparatorVisibility="Default" SeparatorColor="{Binding Path=Status_color}" IsPullToRefreshEnabled="True">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <ViewCell>
@@ -177,7 +181,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="ACTIVE SUBSCRIPTIONS" Grid.Column="0" Margin="10,0,0,0" HorizontalOptions="Start" 
+                                <Label Text="SUBSCRIPTIONS" Grid.Column="0" Margin="10,0,0,0" HorizontalOptions="Start" 
                        VerticalOptions="CenterAndExpand" TextColor="{StaticResource Primary}" FontSize="Subtitle"/>
                                 <ImageButton x:Name="chvBUp" Source="chevronUp.png" Grid.Column="1" Aspect="Fill" HeightRequest="24" 
                                              WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="End" Clicked="SubHider_clicked" Margin="0,0,5,0"/>
