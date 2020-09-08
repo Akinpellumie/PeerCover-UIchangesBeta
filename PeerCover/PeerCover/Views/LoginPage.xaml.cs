@@ -72,7 +72,6 @@ namespace PeerCover.Views
                 if (members.CheckInformation())
                 {
 
-
                     var json = JsonConvert.SerializeObject(members);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -344,12 +343,20 @@ namespace PeerCover.Views
 
         async void Permission()
         {
-            await Permissions.RequestAsync<Permissions.Camera>();
-            await Permissions.RequestAsync<Permissions.StorageRead>();
-            await Permissions.RequestAsync<Permissions.StorageWrite>();
-            await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-            await Permissions.RequestAsync<Permissions.LocationAlways>();
-            await Permissions.RequestAsync<Permissions.NetworkState>();
+            try
+            {
+                await Permissions.RequestAsync<Permissions.Camera>();
+                await Permissions.RequestAsync<Permissions.StorageRead>();
+                await Permissions.RequestAsync<Permissions.StorageWrite>();
+                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                await Permissions.RequestAsync<Permissions.LocationAlways>();
+                await Permissions.RequestAsync<Permissions.NetworkState>();
+            }
+            catch (Exception)
+            {
+                return;
+            }
+
         }
     }
 }

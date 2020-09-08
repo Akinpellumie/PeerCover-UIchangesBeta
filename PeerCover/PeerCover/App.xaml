@@ -165,6 +165,10 @@
                 <Setter Property="FontFamily" Value="{StaticResource font_book}"/>
             </Style>
 
+            <Style x:Key="contentPage" TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="#E5E5E5"/>
+            </Style>
+            
             <Style x:Key="FrameStyle" TargetType="Frame">
                 <Setter Property="HasShadow" Value="False" />
                 <Setter Property="Padding" Value="0" />

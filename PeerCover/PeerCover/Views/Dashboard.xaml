@@ -103,7 +103,7 @@
                                 <ImageButton x:Name="chevUp" Source="chevronDown.png" Grid.Column="1" Aspect="Fill" BackgroundColor="White" 
                                    WidthRequest="24" HeightRequest="24" Clicked="menuHider_clicked" HorizontalOptions="End" Margin="0,0,5,0"/>
                             </Grid>
-                            <StackLayout x:Name="menuHide" IsVisible="True">
+                            <StackLayout x:Name="menuHide" Margin="5,0,5,0" IsVisible="True">
                                 <Grid HorizontalOptions="FillAndExpand" Margin="3" ColumnSpacing="5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>

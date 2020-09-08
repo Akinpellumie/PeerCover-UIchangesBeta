@@ -47,9 +47,16 @@ namespace PeerCover
 
         async void CheckInternet()
         {
-            if (Connectivity.NetworkAccess == NetworkAccess.None)
+            try
             {
-                await PopupNavigation.Instance.PushAsync(new PopUpNoInternet());
+                if (Connectivity.NetworkAccess == NetworkAccess.None)
+                {
+                    await PopupNavigation.Instance.PushAsync(new PopUpNoInternet());
+                }
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
 

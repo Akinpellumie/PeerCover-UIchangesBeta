@@ -82,19 +82,14 @@
                                 </Frame>
 
                             </StackLayout>
-                            <StackLayout  Margin="2,10" IsVisible="True"  Orientation="Horizontal">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-
+                            <StackLayout  Margin="2,10" IsVisible="True"  Orientation="Vertical">
+                                
                                     <StackLayout HorizontalOptions="Start" Orientation="Horizontal">
                                 <Label Text="Remember Me: " FontSize="12" Margin="0,4,0,0" />
                                 <Switch  x:Name="toggleSwitch" IsToggled="{Binding RememberMe}" />
                                 </StackLayout>
 
-                                <StackLayout HorizontalOptions="End" Grid.Column="1">
+                                <StackLayout HorizontalOptions="End">
                                 <Label
                     x:Name="LabelForgotPassword"
                     Grid.Row="2"
@@ -108,8 +103,7 @@
                                     </Label.GestureRecognizers>
                                 </Label>
                                 </StackLayout>
-                                </Grid>
-                            </StackLayout>
+                                 </StackLayout>
 
                            
 
