@@ -3,19 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ff1="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ff1="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              mc:Ignorable="d"
              x:Class="PeerCover.Utils.FlyoutHeader"
              HeightRequest="120">
 
-    <Grid BackgroundColor="Accent" Padding="5">
+    <Grid BackgroundColor="{StaticResource Primary}" Padding="5">
             <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
              </Grid.ColumnDefinitions>
-                <pv:PancakeView Grid.Column="0" HasShadow="True" HeightRequest="70" WidthRequest="70" CornerRadius="55" Margin="0,10,0,10"
-                                HorizontalOptions="Center" VerticalOptions="Center" BorderIsDashed="True" BorderThickness="1" 
-                                                           BorderColor="Accent">
+                <pv:PancakeView Grid.Column="0" HeightRequest="70" WidthRequest="70" CornerRadius="55" Margin="0,10,0,10"
+                                HorizontalOptions="Center" VerticalOptions="Center">
+            <pv:PancakeView.Border>
+                <pv:Border Color="{StaticResource Primary}" Thickness="1"/>
+            </pv:PancakeView.Border>
                     <pv:PancakeView.BackgroundGradientStops>
                         <pv:GradientStopCollection>
                             <pv:GradientStop Color="White" Offset="0"/>

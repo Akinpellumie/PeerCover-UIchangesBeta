@@ -7,7 +7,8 @@
             get
             {
                 //return "https://cover-my-car.herokuapp.com";
-                return "https://www.proguard.peercover.com.ng";
+                return "https://proguardpeercover.herokuapp.com";
+                //return "https://www.proguard.peercover.com.ng";
             }
         }
         //public static string domainurl

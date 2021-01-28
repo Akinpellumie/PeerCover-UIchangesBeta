@@ -15,7 +15,7 @@
         <vm:LoginViewModel />
     </ContentPage.BindingContext>
 
-    <pv:PancakeView HasShadow="True" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <pv:PancakeView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <pv:PancakeView.BackgroundGradientStops>
             <pv:GradientStopCollection>
                 <pv:GradientStop Color="#E7EDF8" Offset="0"/>
@@ -96,7 +96,7 @@
                     Margin="5" FontSize="Small"
                     HorizontalOptions="End"
                     Text="Forgot Password?"
-                    TextColor="Accent"
+                    TextColor="{StaticResource Primary}"
                     TextDecorations="Underline">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="ForgotPassword" />
@@ -119,10 +119,10 @@
                         TextColor="{StaticResource Primary}"  BackgroundColor="Transparent"
                        Clicked="SignUpClicked" x:Name="Register"/>-->
 
-                            <Label Text="Don't have an account yet?" Margin="0,5" TextColor="Accent" FontSize="Small"/>
+                            <Label Text="Don't have an account yet?" Margin="0,5" TextColor="{StaticResource Primary}" FontSize="Small"/>
 
                             <Label x:Name="Register" Margin="0,5"
-                        Text="Click Here!" TextColor="Accent" FontSize="Small" TextDecorations="Underline">
+                        Text="Click Here!" TextColor="{StaticResource Primary}" FontSize="Small" TextDecorations="Underline">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="SignUpClicked" />
                                 </Label.GestureRecognizers>

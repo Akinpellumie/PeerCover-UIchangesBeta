@@ -62,13 +62,15 @@
                                             </StackLayout>
                                             <StackLayout Grid.Column="1" HorizontalOptions="CenterAndExpand" 
                                                      BackgroundColor="Transparent" VerticalOptions="CenterAndExpand">
-                                                <pv:PancakeView HasShadow="True" HeightRequest="50" WidthRequest="50" CornerRadius="25" Margin="15,5,0,0"
-                                                        HorizontalOptions="Start" VerticalOptions="Center" BorderIsDashed="True" BorderThickness="1" 
-                                                           BorderColor="Accent"  BackgroundColor="Accent">
+                                                <pv:PancakeView HeightRequest="50" WidthRequest="50" CornerRadius="25" Margin="15,5,0,0"
+                                                        HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="{StaticResource Primary}">
+                                                    <pv:PancakeView.Border>
+                                                        <pv:Border Color="{StaticResource Primary}" Thickness="1"/>
+                                                    </pv:PancakeView.Border>
                                                     <pv:PancakeView.BackgroundGradientStops>
                                                         <pv:GradientStopCollection>
-                                                            <pv:GradientStop Color="Accent" Offset="0"/>
-                                                            <pv:GradientStop Color="Accent" Offset="1"/>
+                                                            <pv:GradientStop Color="{StaticResource Primary}" Offset="0"/>
+                                                            <pv:GradientStop Color="{StaticResource Primary}" Offset="1"/>
                                                         </pv:GradientStopCollection>
                                                     </pv:PancakeView.BackgroundGradientStops>
                                                     <Image HeightRequest="100" x:Name="DashImage"
@@ -112,15 +114,15 @@
                                     </Grid.ColumnDefinitions>
                                     <Button Grid.Column="0" Text="New Plan" TextColor="{StaticResource TxtColor}" 
                                         FontSize="Small" ContentLayout="Top, 0" Padding="5" ImageSource="subAct.png" Clicked="Sub_Clicked"
-                                       BorderWidth="1" HeightRequest="60" BackgroundColor="White" BorderColor="Accent"/>
+                                       BorderWidth="1" HeightRequest="60" BackgroundColor="White" BorderColor="{StaticResource Primary}"/>
 
                                     <Button Grid.Column="1" Text="Profile" Padding="5" TextColor="{StaticResource TxtColor}" 
                                         FontSize="Small" ContentLayout="Top, 0" ImageSource="editMe.png" Clicked="ProDash_Clicked"
-                                       BorderWidth="1" HeightRequest="60" BackgroundColor="White" BorderColor="Accent"/>
+                                       BorderWidth="1" HeightRequest="60" BackgroundColor="White" BorderColor="{StaticResource Primary}"/>
 
                                     <Button Grid.Column="2" Text="Members" TextColor="{StaticResource TxtColor}" 
                                         FontSize="Small" ContentLayout="Top, 0" Padding="5" ImageSource="memberIcn.png" Clicked="MemDash_Clicked"
-                                       BorderWidth="1" HeightRequest="60" BackgroundColor="White" BorderColor="Accent"/>
+                                       BorderWidth="1" HeightRequest="60" BackgroundColor="White" BorderColor="{StaticResource Primary}"/>
 
                                 </Grid>
                             </StackLayout>

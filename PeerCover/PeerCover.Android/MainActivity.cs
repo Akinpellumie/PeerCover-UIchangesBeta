@@ -23,7 +23,6 @@ namespace PeerCover.Droid
 
         TextView msgText;
 
-        [Obsolete]
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -38,7 +37,8 @@ namespace PeerCover.Droid
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
+            Rg.Plugins.Popup.Popup.Init(this);
+            //Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             CachedImageRenderer.Init(true);
             string devId = GetDevId();
             CachedImageRenderer.InitImageViewHandler();
@@ -92,7 +92,7 @@ namespace PeerCover.Droid
                 Description = "Firebase Cloud Messages appear in this channel"
             };
 
-            var notificationManager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
+            var notificationManager = (NotificationManager)GetSystemService(NotificationService);
             notificationManager.CreateNotificationChannel(channel);
         }
 

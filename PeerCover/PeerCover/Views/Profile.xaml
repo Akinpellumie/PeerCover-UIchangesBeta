@@ -27,7 +27,7 @@
                      Priority="2"/>
     </ContentPage.ToolbarItems>
     
-    <pv:PancakeView HasShadow="True" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <pv:PancakeView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <pv:PancakeView.BackgroundGradientStops>
             <pv:GradientStopCollection>
                 <pv:GradientStop Color="#E7EDF8" Offset="0"/>
@@ -56,9 +56,11 @@
                                 <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
                             <BoxView BackgroundColor="White" Opacity="0.7" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
-                            <pv:PancakeView Grid.Column="0" HasShadow="True" HeightRequest="76" WidthRequest="76" CornerRadius="38" Margin="20,0,20,0"
-                                HorizontalOptions="Start" VerticalOptions="Center" BorderIsDashed="True" BorderThickness="1" 
-                                                           BorderColor="Accent">
+                            <pv:PancakeView Grid.Column="0" HeightRequest="76" WidthRequest="76" CornerRadius="38" Margin="20,0,20,0"
+                                HorizontalOptions="Start" VerticalOptions="Center">
+                                <pv:PancakeView.Border>
+                                    <pv:Border Color="{StaticResource Primary}" Thickness="1"/>
+                                </pv:PancakeView.Border>
                                 <pv:PancakeView.BackgroundGradientStops>
                                     <pv:GradientStopCollection>
                                         <pv:GradientStop Color="White" Offset="0"/>
@@ -71,11 +73,11 @@
                             </pv:PancakeView>
 
                             <StackLayout Grid.Column="1" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
-                                <Label x:Name="PageName" Text="{Binding capName}" FontSize="Subtitle" TextColor="Accent"
+                                <Label x:Name="PageName" Text="{Binding capName}" FontSize="Subtitle" TextColor="{StaticResource Primary}"
                                         FontAttributes="Bold" FontFamily="{StaticResource font_medium}" 
                                        HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
 
-                                <Label x:Name="UserName" Text="{Binding username}"  FontAttributes="Bold" TextColor="Accent" 
+                                <Label x:Name="UserName" Text="{Binding username}"  FontAttributes="Bold" TextColor="{StaticResource Primary}" 
                                        FontSize="Body" HorizontalOptions="Start"/>
                             </StackLayout>
                         </Grid>
@@ -85,7 +87,7 @@
 
             <StackLayout Grid.Row="1" Orientation="Vertical" Margin="10">
                 <Button Grid.Row="2" Margin="15,0,15,10" HorizontalOptions="Fill" Text="Edit Profile" CornerRadius="50"
-                        HeightRequest="45" FontSize="Subtitle" TextColor="White" BackgroundColor="Accent" BorderWidth="1"
+                        HeightRequest="45" FontSize="Subtitle" TextColor="White" BackgroundColor="{StaticResource Primary}" BorderWidth="1"
                             BorderColor="{StaticResource BtnColor}" Clicked="EditProfileClicked" />
 
                 <Frame BackgroundColor="White" CornerRadius="12" Margin="5" VerticalOptions="End" Padding="3">
